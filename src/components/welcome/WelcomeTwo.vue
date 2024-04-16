@@ -1,10 +1,10 @@
 <template>
-  <div class="About">
-    <h2>About</h2>
+  <div class="Two">
+    <h2>Two</h2>
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
   
 </script>
 
