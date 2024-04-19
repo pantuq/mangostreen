@@ -1,8 +1,7 @@
 <template>
   <div class="Welcome">
     <header>
-      logo
-      <h1>山竹记账</h1>
+      <img src="../assets/icons/logo.svg" alt="">
     </header>
     <main>
         <RouterView></RouterView>
