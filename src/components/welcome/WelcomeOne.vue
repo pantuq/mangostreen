@@ -1,21 +1,25 @@
 <template>
-  <div class="Wrapper">
-    <div class="card">
+  <WelcomeLayout>
+    <template #icon>
       <img src="../../assets/icons/pig.svg" alt="">
-      <h2>会挣钱<br>还要会省钱</h2>
-    </div>
-    <div class="action">
+    </template>
+
+    <template #title>
+      <h2>会挣钱<br>还会省钱</h2>
+    </template>
+
+    <template #action>
       <RouterLink class="fake" to="/start">跳过</RouterLink>
       <RouterLink to="/welcome/2">下一页</RouterLink>
       <RouterLink to="/start">跳过</RouterLink>
-    </div>
-  </div>
+    </template>
+  </WelcomeLayout>
 </template>
 
 <script setup>
-  
+import WelcomeLayout from './WelcomeLayout.vue'
 </script>
 
 <style scoped>
-@import url(./WelcomeLayout.scss);
+  @import url(./WelcomeLayout.scss);
 </style>
