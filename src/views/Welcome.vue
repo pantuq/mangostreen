@@ -3,9 +3,18 @@
     <header>
       <img src="../assets/icons/logo.svg" alt="">
     </header>
-    <main>
-        <RouterView></RouterView>
+    <div class="Wrapper">
+      <main>
+        <RouterView name="main" v-slot="{Component}">
+          <transition name="slide-fade">
+          <component :is="Component" />
+        </transition>
+        </RouterView>
     </main>
+    <footer>
+      <RouterView name="footer"></RouterView>
+    </footer>
+    </div>
   </div>
 </template>
 
@@ -29,11 +38,36 @@
         align-items: center;
         padding-top: 66px;
     }
+    > .Wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
     > main {
         flex-grow: 1;
         display: flex;
         flex-direction: column;
+        position: relative;
+
+        > .slide-fade-enter-active,
+        > .slide-fade-leave-active {
+          transition: all 3s ease-out;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 358px;
+          height: 559px;
+        }
+
+        > .slide-fade-enter-from {
+          transform: translateX(100vw);
+        }
+
+        > .slide-fade-leave-to {
+          transform: translateX(-100vw);
+        }
     }
   }
+}
+
 
 </style>
