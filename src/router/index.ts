@@ -11,9 +11,9 @@ import WelcomeFour from '../components/welcome/WelcomeFour.vue'
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-        {path: '/', component: Home},
-        {path: '/About', component: About},
+        {path: '/', redirect: '/welcome'},
         {path: '/welcome',component: Welcome, children: [
+            { path: '', redirect: '/welcome/1'},
             { path: '1', component: WelcomeOne},
             { path: '2', component: WelcomeTwo},
             { path: '3', component: WelcomeThree},
