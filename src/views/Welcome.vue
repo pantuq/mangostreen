@@ -4,22 +4,21 @@
       <img src="../assets/icons/logo.svg" alt="">
     </header>
     <div class="Wrapper">
-      <main>
+      <main ref="main" @touchstart="touchStart" @touchmove="touchMove">
         <RouterView name="main" v-slot="{Component}">
           <transition name="slide-fade">
-          <component :is="Component" />
-        </transition>
+            <component :is="Component" />
+          </transition>
         </RouterView>
-    </main>
-    <footer>
-      <RouterView name="footer"></RouterView>
-    </footer>
+      </main>
+      <footer>
+        <RouterView name="footer"></RouterView>
+      </footer>
     </div>
   </div>
 </template>
 
-<script setup>
-  
+<script lang="ts" setup>
 </script>
 
 <style lang="scss" scoped>
@@ -50,12 +49,12 @@
 
         > .slide-fade-enter-active,
         > .slide-fade-leave-active {
-          transition: all 3s ease-out;
+          transition: all 1s ease-out;
           position: absolute;
           top: 0;
           left: 0;
-          width: 358px;
-          height: 559px;
+          width: 92%;
+          height: 97.3%;
         }
 
         > .slide-fade-enter-from {
