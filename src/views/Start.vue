@@ -3,11 +3,13 @@
     <div class="btn_wrapper">
         <Button class="btn"></Button>
     </div>
+    <FloatButton></FloatButton>
   </div>
 </template>
 
 <script setup>
 import Button from '../shared/Button.vue'
+import FloatButton from '../shared/FloatButton.vue';
   
 </script>
 

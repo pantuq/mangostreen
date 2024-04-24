@@ -1,8 +1,8 @@
 <template>
   <div class="card">
     <svg style="width: 128px;">
-      <use xlink:href="#icon-clock" fill="red"></use>
-    </svg>
+      <use xlink:href="#icon-clock" fill="red"></use>
+    </svg>
     <h2>每日提醒<br>不会遗漏每一笔账单</h2>
   </div>
 </template>
