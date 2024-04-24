@@ -1,6 +1,8 @@
 <template>
   <div class="card">
-    <img src="../../../assets/icons/cloud.svg" alt="">
+    <svg style="width: 128px;">
+      <use xlink:href="#icon-cloud" fill="red"></use>
+    </svg>
     <h2>云备份<br>再也不怕数据丢失</h2>
   </div>
 </template>

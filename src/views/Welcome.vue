@@ -1,10 +1,14 @@
 <template>
   <div class="Welcome">
     <header>
-      <img src="../assets/icons/logo.svg" alt="">
+      <svg style="width: 100px; height: 100px;">
+      <!-- 'xlink：href执行用哪一个图标,属性值务必icon-图标名字·' -->
+      <!-- use标签fi11属性可以设置图标的颜色 -->
+      <use xlink:href="#icon-logo" fill="red"></use>
+    </svg>
     </header>
     <div class="Wrapper">
-      <main ref="main" @touchstart="touchStart" @touchmove="touchMove">
+      <main ref="main">
         <RouterView name="main" v-slot="{Component}">
           <transition name="slide-fade">
             <component :is="Component" />

@@ -1,6 +1,8 @@
 <template>
   <div class="card">
-    <img src="../../../assets/icons/pig.svg" alt="">
+    <svg style="width: 128px;">
+      <use xlink:href="#icon-pig" fill="red"></use>
+    </svg>
     <h2>会挣钱<br>还会省钱</h2>
   </div>
 </template>

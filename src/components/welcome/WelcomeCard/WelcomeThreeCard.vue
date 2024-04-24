@@ -1,6 +1,8 @@
 <template>
   <div class="card">
-    <img src="../../../assets/icons/chart.svg" alt="">
+    <svg style="width: 128px;">
+      <use xlink:href="#icon-chart" fill="red"></use>
+    </svg>
     <h2>数据可视化<br>收支一目了然</h2>
   </div>
 </template>
