@@ -5,6 +5,7 @@
 </template>
 
 <script lang="ts" setup>
+import { defineProps,PropType } from 'vue';
  const props =  defineProps({
     direaction: {
         type: String as PropType<'-' | '|' | 'horizontal' | 'vertical'>,

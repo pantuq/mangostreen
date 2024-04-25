@@ -1,5 +1,5 @@
 <template>
-  <button class="button">button</button>
+  <button class="button">开始记账</button>
 </template>
 
 <script setup>

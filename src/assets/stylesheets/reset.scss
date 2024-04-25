@@ -1,21 +1,108 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+// reset.less
+
+// Box Sizing
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-*::before, *::after {
-    box-sizing: border-box;
-}
-h1,h2,h3,h4,h5,h6 {
-    font-weight: normal;
+// Margin and Padding
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+dl,
+dd,
+dt,
+figure,
+blockquote,
+fieldset,
+pre {
+  margin: 0;
+  padding: 0;
 }
 
+// Typography
+body,
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: 100%;
+  line-height: 0.8;
+  margin: 0;
+}
+
+// Remove List Styles
+ul,
+ol {
+  list-style: none;
+}
+
+// Headings
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+// Remove Text Decoration
 a {
-    color: inherit;
-    text-decoration: none;
+  text-decoration: none;
 }
 
-button,input {
-    font: inherit;
+// Remove Border
+button,
+input,
+select,
+textarea {
+  border: none;
+  outline: none;
 }
+
+// Remove Background Color and Border Radius for Inputs and Textareas
+input,
+textarea {
+  background-color: transparent;
+  border-radius: 0;
+}
+
+// Reset to Normal Line Height
+pre {
+  line-height: normal;
+}
+
+// Vertical Alignment for Text Inputs
+input[type='text'],
+input[type='password'],
+input[type='email'],
+textarea {
+  vertical-align: middle;
+}
+
+// Make Images Responsive
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+// Remove Default Button Styles
+button {
+  background-color: transparent;
+  padding: 0;
+}
+
+// Optional: Apply Additional Styles or Customizations as Needed
