@@ -10,7 +10,7 @@
   </div>
 </template>
 
-<script setup>
+<script lang="ts" setup>
   
 </script>
 
@@ -22,6 +22,7 @@
   justify-content: flex-start;
   align-items: center;
   padding:40px 12px 16px;
+  line-height: 0.8;
     > .title_wrapper {
       font-size: 24px;
       margin-left: 12px;
