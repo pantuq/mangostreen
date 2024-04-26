@@ -9,17 +9,21 @@
         </template>
       </NavBar>
 
-    <div class="pig_wrapper">
+    
+      <div class="pig_wrapper">
       <Center class="pig">
         <svg style="width: 128px;">
           <use xlink:href="#icon-pig" fill="red"></use>
         </svg>
       </Center>
     </div>
-
-    <div class="btn_wrapper">
+    
+    <RouterLink to="/items/create">
+      <div class="btn_wrapper">
         <Button class="btn"></Button>
     </div>
+    </RouterLink>
+    
     <FloatButton></FloatButton>
 
     <OverLay v-show="overlayVisible" @close-mask="overlayClose"></OverLay>
@@ -33,6 +37,7 @@ import Center from '../shared/Center.vue'
 import NavBar from '../shared/NavBar.vue';
 import OverLay from '../shared/OverLay.vue';
 import { ref } from 'vue';
+
 
 const overlayVisible = ref(false)
 

@@ -10,6 +10,9 @@ import WelcomeThreeCard from '../components/welcome/WelcomeCard/WelcomeThreeCard
 import WelcomeFourAction from '../components/welcome/WelcomeAction/WelcomeFourAction.vue'
 import WelcomeFourCard from '../components/welcome/WelcomeCard/WelcomeFourCard.vue'
 import Start from "../views/Start.vue"
+import ItemPage from '../views/ItemPage.vue'
+import ItemList from '../components/Item/ItemList.vue'
+import ItemCreate from '../components/Item/ItemCreate.vue'
 
 const router = createRouter({
     history: createWebHistory(),
@@ -17,12 +20,17 @@ const router = createRouter({
         {path: '/', redirect: '/welcome'},
         {path: '/welcome',component: Welcome, children: [
             { path: '', redirect: '/welcome/1'},
-            { path: '1', name: 'Welcome1', components: {main: WelcomeOneCard, footer: WelcomeOneAction}},
+            { path: '1', components: {main: WelcomeOneCard, footer: WelcomeOneAction}},
             { path: '2', components: {main: WelcomeTwoCard, footer: WelcomeTwoAction}},
             { path: '3', components: {main: WelcomeThreeCard, footer: WelcomeThreeAction}},
             { path: '4', components: {main: WelcomeFourCard, footer: WelcomeFourAction}}
         ]},
-        {path: '/start', component: Start}
+        {path: '/start', component: Start},
+        {path: '/items', component: ItemPage, children: [
+            { path: '', redirect: '/items/list'},
+            { path: 'list', component: ItemList},
+            { path: 'create', component: ItemCreate}
+        ]}
     ]
 })
 
