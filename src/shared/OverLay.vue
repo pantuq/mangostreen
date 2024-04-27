@@ -35,40 +35,40 @@
 
 </script>
 
-<style lang="scss"  scoped>
+<style lang="less"  scoped>
 .mask {
   position: fixed;
-  z-index: 10;
+  z-index: var(--z-index-overlay);
   background: rgba(0, 0, 0 ,0.5);
-  top: 24px;
+  top: var(--top-safe-area-height);
   left: 0;
   width: 100%;
-  height: calc(100% - 24px);
+  height: calc(100% - var(--top-safe-area-height));
 }
 
 .overlay {
   position: fixed;
-  z-index: 11;
+  z-index: var(--z-index-overlay);
   background: white;
-  top: 24px;
+  top: var(--top-safe-area-height);
   left: 0;
   width: 14em;
-  height: calc(100% - 24px);
-   > section {
-    background: #5d33be;
+  height: calc(100% - var(--top-safe-area-height));
+    section {
+    background: var(--overlay-section-color);
     height: 128px;
     padding: 32px 0 44px 16px;
-    > .user-status {
-      color: white;
+     .user-status {
+      color: var(--overlay-user-status-text-color);
       font-weight: 350;
       font-size: 24px;
     }
-    > .sign-in {
-      color: white;
+     .sign-in {
+      color: var(--overlay-sign-in-text-color);
       font-size: 20px;
     }
    }
-   > .side-navbar {
+    .side-navbar {
     padding: 18px 0 0 16px;
     font-size: 20px;
    }
