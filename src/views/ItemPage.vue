@@ -1,10 +1,11 @@
 <template>
   <div class="ItemPage">
-    <h2>ItemPage</h2>
+      <RouterView></RouterView>
   </div>
 </template>
 
 <script setup>
+import NavBar from '../shared/NavBar.vue';
   
 </script>
 
