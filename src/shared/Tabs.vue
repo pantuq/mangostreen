@@ -1,10 +1,13 @@
 <template>
   <div class="Tabs">
-    <div 
-    v-for="(item,index) in titles" 
-    @click="select(item)"
-    :class="selected === item ? 'selected' : ''"
-    :key="index">{{ item }}</div>
+    <nav>
+      <div 
+      v-for="(item,index) in titles" 
+      @click="select(item)"
+      :class="selected === item ? 'selected' : ''"
+      :key="index">{{ item }}</div>
+    </nav>
+    
     <!-- 动态渲染组件，is绑定哪个组件被渲染 -->
     <component :is="current" :key="current" />
     <!-- for一定要绑定key -->
@@ -52,9 +55,36 @@
 
 </script>
 
-<style scoped>
-  .selected {
-    color: white;
-    background: blueviolet;
+<style lang="scss" scoped>
+.Tabs {
+  > nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    color: var(--overlay-user-status-text-color);
+    > div {
+      flex-grow: 1;
+      flex-shrink: 0;
+      padding: 12px 0;
+      background: var(--navbar-bg-end);
+      &.selected {
+        position: relative;
+        &::after {
+          content: "";
+          display: block;
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 4px;
+          background: var(--tabs-indicator-color);
+          transition: all 0.3s;
+        }
+      }
+    }
   }
+}
+
+  
 </style>

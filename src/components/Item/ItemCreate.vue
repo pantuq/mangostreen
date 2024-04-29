@@ -2,16 +2,16 @@
   <div class="ItemCreate">
     <NavBar>
         <template #icon>
-          <svgIcon name="exit" color="white" width="26px" height="26px" @click="onClickMenu"></svgIcon>
+          <svgIcon name="exit" color="white" width="26px" height="26px"></svgIcon>
         </template>
         <template #title>
           <span>记一笔</span>
         </template>
       </NavBar>
       <div>
-        <Tabs selected="{reKind.value}" onUpdateSelected={onUpdateSelected}>
-          <Tabs name="支出"></Tabs>
-          <Tabs name="收入"></Tabs>
+        <Tabs :selected="tabKind" @update-selected='onUpdateSelected'>
+          <Tab title="支出">item1</Tab>
+          <Tab title="收入">item2</Tab>
         </Tabs>
       </div>
   </div>
@@ -20,10 +20,12 @@
 <script lang="ts" setup>
 import NavBar from '../../shared/NavBar.vue';
 import Tabs from '../../shared/Tabs.vue'
+import Tab from '../../shared/Tab.vue'
 import {ref} from 'vue'
 
-const reKind = ref('支出')
-const onUpdateSelected = (name: String) => reKind.value = name
+let tabKind = ref('支出')
+// 监听tab切换
+const onUpdateSelected = (title: string) => tabKind.value = title
   
 </script>
 
