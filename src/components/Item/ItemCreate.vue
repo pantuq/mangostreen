@@ -14,6 +14,7 @@
           <Tab title="收入">item2</Tab>
         </Tabs>
       </div>
+      <InputPad></InputPad>
   </div>
 </template>
 
@@ -22,6 +23,7 @@ import NavBar from '../../shared/NavBar.vue';
 import Tabs from '../../shared/Tabs.vue'
 import Tab from '../../shared/Tab.vue'
 import {ref} from 'vue'
+import InputPad from './InputPad.vue';
 
 let tabKind = ref('支出')
 // 监听tab切换
