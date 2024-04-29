@@ -1,10 +1,12 @@
 <template>
   <div class="inputPad_Wrapper">
-    <span class="date">
-      <svgIcon name="date" color="white"></svgIcon>
-      <span>2024-01-01</span>
-    </span>
-    <span class="amount">金额</span>
+    <div class="dateAndAmount">
+      <span class="date">
+        <svgIcon name="date" color="white" width="24" height="24"></svgIcon>
+        <span>2024-01-01</span>
+      </span>
+      <span class="amount">199.9</span>
+    </div>
     <div class="button_Wrapper">
       <button v-for="(item,index) in buttonMap" :key="index" @click="item.onClick">{{item.text}}</button>
     </div>
@@ -41,6 +43,27 @@ const buttonMap = [
     bottom: 0;
     left: 0;
     width: 100%;
+    font-family: monospace;
+    border-top: 1px solid var(--button-border-color);
+    > .dateAndAmount {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      > .date {
+        display: flex;
+        font-size: 12px;
+        align-items: center;
+        color: var(--date-color);
+        > span {
+          margin-left: 8px;
+        }
+      }
+      > .amount {
+        font-size: 20px;
+        color: var(--amount-color);
+      }
+    }
     > .button_Wrapper {
       display: flex;
       flex-wrap: wrap;
