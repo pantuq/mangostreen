@@ -55,8 +55,33 @@ const onCancel = () => {
   show.value = false;
 };
 
-const amount = ref('')
+const amount = ref('0')
 const appendAmount = (value: string|number) => {
+  const nString = value.toString()
+  const dotIndex = amount.value.indexOf('.')
+  if(amount.value.length >= 16){
+    return
+  }
+  if(dotIndex >= 0 && amount.value.length - dotIndex > 2){
+    return
+  }
+  if(nString === "."){
+    // 如果已经有小数点了，那么就不能再出现小数点了
+    if(dotIndex >= 0){
+      return
+    }
+  }else if(nString === '0'){
+    if(dotIndex === -1){
+      // 如果没有小数点，且已经有过0，那么不能再次出现0
+      if(amount.value === '0'){
+        return
+      }
+    }
+  }else{
+    if(amount.value === '0'){
+      amount.value = ''
+    }
+  }
   amount.value += value.toString()
 }
   
