@@ -3,7 +3,10 @@
     <div class="dateAndAmount">
       <span class="date">
         <svgIcon name="date" color="white" width="24" height="24"></svgIcon>
-        <span>2024-01-01</span>
+        <span @click="showPopup">{{ FormData() }}</span>
+        <van-popup v-model:show="show" position="bottom" :style="{ height: '50%' }">
+          <van-date-picker v-model="nowDate" title="选择年月" @confirm="onConfirm" />
+        </van-popup>
       </span>
       <span class="amount">199.9</span>
     </div>
@@ -14,6 +17,9 @@
 </template>
 
 <script lang="ts" setup>
+import { time } from '../../shared/Time';
+import { ref } from 'vue';
+// import { Popup } from 'vant';
 
 const buttonMap = [
   {text: '1',onClick: () => {}},
@@ -34,6 +40,25 @@ const buttonMap = [
   {text: '提交',onClick: () => {}},
 
 ]
+
+const now = new Date()
+
+const nowDate = ref(time(now).FormData())
+const FormData = () => {
+  return nowDate.value.join("-")
+}
+
+
+
+
+const show = ref(false);
+const showPopup = () => {
+  show.value = true;
+};
+
+const onConfirm = () => {
+  show.value = false;
+};
   
 </script>
 

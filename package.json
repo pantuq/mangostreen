@@ -10,14 +10,18 @@
   },
   "dependencies": {
     "sass": "^1.75.0",
+    "vant": "^4.8.11",
     "vue": "^3.4.21",
     "vue-router": "4"
   },
   "devDependencies": {
+    "@vant/auto-import-resolver": "^1.1.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "fast-glob": "^3.3.2",
     "less": "^4.2.0",
     "typescript": "^5.2.2",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
     "vite": "^5.2.0",
     "vite-plugin-svg-icons": "^2.0.1",
     "vue-tsc": "^2.0.6"
