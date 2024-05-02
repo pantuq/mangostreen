@@ -1,8 +1,10 @@
 <template>
-  <button class="button">开始记账</button>
+  <button class="button">
+    <slot></slot>
+  </button>
 </template>
 
-<script setup>
+<script lang="ts" setup>
   
 </script>
 

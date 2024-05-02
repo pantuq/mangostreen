@@ -20,7 +20,7 @@
     
     <RouterLink to="/items/create">
       <div class="btn_wrapper">
-        <Button class="btn"></Button>
+        <Button class="btn">开始记账</Button>
     </div>
     </RouterLink>
     

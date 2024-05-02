@@ -8,50 +8,42 @@
         <span>新建标签</span>
       </template>
     </NavBar>
-    <form>
-      <div>
-        <label>
-          <span>标签名</span>
+    <form class="form">
+      <!-- input -->
+      <div class="formRow">
+        <label class="formLabel">
+          <span class="formItem-name">标签名</span>
+          <div class="formItem-value">
+            <input v-model="formData.name" class="formItem input error" type="text" placeholder="请输入2-4个汉字" >
+          </div>
+          <div class="formItem-errorHint">
+            <span>必填</span>
+          </div>
         </label>
       </div>
-
-      <div>
-        <label>
-          <span>符号</span>
-        <div>
-          <nav>
-            <span>表情</span>
-            <span>手势</span>
-            <span>职业</span>
-            <span>衣服</span>
-            <span>动物</span>
-            <span>自然</span>
-            <span>食物</span>
-            <span>运动</span>
-          </nav>
-          <ol>
-            <li>1</li>
-            <li>2</li>
-            <li>3</li>
-            <li>4</li>
-            <li>5</li>
-            <li>6</li>
-            <li>7</li>
-            <li>8</li>
-            <li>9</li>
-            <li>10</li>
-          </ol>
+      <!-- emoji -->
+      <div class="formRow">
+        <label class="formLabel">
+          <span class="fromItem-name">符号:{{ formData.sign }}</span>
+        <div class="formItem-value">
+          <EmojiSelect v-model="formData.sign" class="formItem emojiList error"></EmojiSelect>
+      </div>
+      <div class="formItem-errorHint">
+        <span>必填</span>
       </div>
       </label>
       </div>
-      
-      <div>
+      <!-- tips -->
+      <div class="tips">
         <p>记账时长按标签即可进行编辑</p>
       </div>
-
-      <div>
-        <button>确定</button>
+    <!-- button -->
+      <div class="formRow">
+        <div class="formItem-value">
+          <Button class="formItem button">确认</Button>
+        </div>
       </div>
+      
       
     </form>
   </div>
@@ -59,10 +51,62 @@
 
 <script lang="ts" setup>
 import NavBar from '../../shared/NavBar.vue';
+import Button from '../../shared/Button.vue'
+import { reactive } from 'vue';
+import EmojiSelect from '../../shared/EmojiSelect.vue'
 
+const formData = reactive({
+  name: '',
+  sign: '',
+});
   
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.tips{
+  text-align: center;
+  padding: 16px 0;
+}
+.form {
+  padding: 16px;
+}
+.formRow {
+  margin-top: 8px;
+}
+.formLabel {
+}
+.formItem {
+  min-height: var(--input-min-height);
+  max-width: 100%;
+  &.button{
+    width: 100%;
+  }
+  &.input {
+    flex-grow: 1;
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--input-radius);
+    font-size: 18px;
+    font-family: inherit;
+    padding-left: 16px;
+    padding-right: 16px;
+    box-shadow: inset 0 0 3px var(--input-shadow);
+    &.error {
+      border-color: var(--error-color);
+    }
+  }
+  
+  &-name {
+  }
+  &-value {
+    display: flex;
+    margin-top: 4px;
+  }
+  &-errorHint {
+    margin-top: 4px;
+    color: var(--error-color);
+    font-size: 12px;
+  }
+}
+
   
 </style>
