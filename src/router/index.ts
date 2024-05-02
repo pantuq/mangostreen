@@ -13,6 +13,10 @@ import Start from "../views/Start.vue"
 import ItemPage from '../views/ItemPage.vue'
 import ItemList from '../components/Item/ItemList.vue'
 import ItemCreate from '../components/Item/ItemCreate.vue'
+import TagPage from "../views/TagPage.vue"
+import TagCreate from '../components/Tag/TagCreate.vue'
+import TagEdit from '../components/Tag/TagEdit.vue'
+
 
 const router = createRouter({
     history: createWebHistory(),
@@ -30,7 +34,12 @@ const router = createRouter({
             { path: '', redirect: '/items/list'},
             { path: 'list', component: ItemList},
             { path: 'create', component: ItemCreate}
+        ]},
+        {path: '/tags',component: TagPage,children: [
+            { path: 'create', component: TagCreate},
+            { path: ':id', component: TagEdit},
         ]}
+        
     ]
 })
 
