@@ -5,7 +5,8 @@
       v-for="(item,index) in titles" 
       @click="select(item)"
       :class="selected === item ? 'selected' : ''"
-      :key="index">{{ item }}</div>
+      :key="index">{{ item }}
+    </div>
     </nav>
     
     <!-- 动态渲染组件，is绑定哪个组件被渲染 -->
@@ -58,12 +59,16 @@
 
 <style lang="scss" scoped>
 .Tabs {
+  position: relative;
   > nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
     text-align: center;
     color: var(--overlay-user-status-text-color);
+    position: sticky;
+    z-index: 1;
+    top: 0;
     > div {
       flex-grow: 1;
       flex-shrink: 0;

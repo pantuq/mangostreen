@@ -100,6 +100,7 @@ const appendAmount = (value: string|number) => {
       justify-content: space-between;
       align-items: center;
       padding: 16px;
+      background: var(--overlay-bg);
       > .date {
         display: flex;
         font-size: 12px;
@@ -123,6 +124,7 @@ const appendAmount = (value: string|number) => {
       "n0 n0 nd submit";
       grid-auto-rows: 48px;
       grid-auto-columns: 1fr;
+      // background: var(--overlay-bg);
       border-top: 1px solid var(--button-border-color);
       > button {
         border: none;
