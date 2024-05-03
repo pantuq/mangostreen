@@ -123,7 +123,7 @@ const incomeTags = ref([
 .tabs {
   flex-grow: 1;
   flex-shrink: 1;
-  overflow: auto;
+  overflow: auto; /* 滚动条不显示 */
 }
 .tabs::-webkit-scrollbar {
     display: none;

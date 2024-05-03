@@ -14,6 +14,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     TagCreate: typeof import('./src/components/Tag/TagCreate.vue')['default']
     TagEdit: typeof import('./src/components/Tag/TagEdit.vue')['default']
+    TagForm: typeof import('./src/components/Tag/TagForm.vue')['default']
     VanDatePicker: typeof import('vant/es')['DatePicker']
     VanDatetimePicker: typeof import('vant/es')['DatetimePicker']
     VanPopup: typeof import('vant/es')['Popup']

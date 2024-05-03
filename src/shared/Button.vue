@@ -1,10 +1,21 @@
 <template>
-  <button class="button">
+  <button :class="['button', $props.level]">
     <slot></slot>
   </button>
 </template>
 
 <script lang="ts" setup>
+import { PropType } from 'vue';
+
+defineProps({
+  onClick: {
+    type: Function
+  },
+  level: {
+    type: String as PropType<'important' | 'normal' | 'danger'>,
+    default: 'normal'
+  }
+})
   
 </script>
 
@@ -17,5 +28,9 @@
     color: var(--button-text);
     font-size: var(--button-font-size);
     border-radius: var(--button-radius);
+  }
+  .danger {
+    border: 1px solid var(--button-bg-danger);
+    background: var(--button-bg-danger);
   }
 </style>
