@@ -17,7 +17,7 @@
 </template>
 
 <script lang="ts" setup>
-import { time } from '../../shared/Time';
+import { Time } from '../../shared/Time';
 import { ref } from 'vue';
 
 const buttonMap = [
@@ -38,7 +38,7 @@ const buttonMap = [
 ]
 
 const now = new Date()
-const nowDate = ref(time(now).FormData())
+const nowDate = ref(new Time(now).FormData())
 const FormData = () => {
   return nowDate.value.join("-")
 }
