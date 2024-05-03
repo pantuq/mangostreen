@@ -26,6 +26,7 @@ import { emojiList } from './EmojiList';
 const emit = defineEmits()
 defineProps({
     modelValue: {
+      // v-model的指令
         type: String,
     }
 })
@@ -55,7 +56,7 @@ const table = [
 
 const emojis: string[] = reactive([])
 
-table[selectTab.value][1].map(category => {
+table[selectTab.value][1].map((category: string[]) => {
     emojiList.find(array => array[0] === category)?.find(emoji => {
         if(typeof emoji !== "string"){
             emoji.map(emo => {
@@ -71,12 +72,13 @@ const changeSelect = (index:number) => {
 }
 const selectEmoji = (emoji:string,index:number) => {
     emit('update:modelValue',emoji)
+    // 传递出去的不是方法
     emoSelect.value = index
 }
 
 watch(selectTab,() => {
     emojis.splice(0,emojis.length)
-    table[selectTab.value][1].map(category => {
+    table[selectTab.value][1].map((category: string[]) => {
     emojiList.find(array => array[0] === category)?.find(emoji => {
         if(typeof emoji !== "string"){
             emoji.map(emo => {

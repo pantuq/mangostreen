@@ -8,7 +8,7 @@
         <span>新建标签</span>
       </template>
     </NavBar>
-    <form class="form">
+    <form class="form" @submit="onSubmit">
       <!-- input -->
       <div class="formRow">
         <label class="formLabel">
@@ -17,7 +17,8 @@
             <input v-model="formData.name" class="formItem input error" type="text" placeholder="请输入2-4个汉字" >
           </div>
           <div class="formItem-errorHint">
-            <span>必填</span>
+            <span>{{ errors['name'] ? errors['name'][0] : ' ' }}</span>
+            <span>&nbsp;</span>
           </div>
         </label>
       </div>
@@ -29,7 +30,8 @@
           <EmojiSelect v-model="formData.sign" class="formItem emojiList error"></EmojiSelect>
       </div>
       <div class="formItem-errorHint">
-        <span>必填</span>
+        <span>{{ errors['sign'] ? errors['sign'][0] : ' ' }}</span>
+        <span>&nbsp;</span>
       </div>
       </label>
       </div>
@@ -43,8 +45,6 @@
           <Button class="formItem button">确认</Button>
         </div>
       </div>
-      
-      
     </form>
   </div>
 </template>
@@ -54,11 +54,46 @@ import NavBar from '../../shared/NavBar.vue';
 import Button from '../../shared/Button.vue'
 import { reactive } from 'vue';
 import EmojiSelect from '../../shared/EmojiSelect.vue'
+import { validate,Rules } from '../../shared/Validate';
+
 
 const formData = reactive({
   name: '',
   sign: '',
 });
+
+// const errors = reactive<{[key in keyof FormData]?: string[] }>({});
+const errors = reactive({
+  name: [],
+  sign: []
+})
+
+const onSubmit = (e: Event) => {
+  e.preventDefault();
+  // 防止页面在点击事件之后表单提交
+
+  // console.log(formData);
+  // 该对象太复杂，需要用到Vue的Api来获取原始对象
+  // console.log(toRaw(formData));
+
+  const rules: Rules<typeof formData> = [
+    { key: 'name', type:"required", message: '必填' },
+    { key: 'name', type: 'pattern', regex: /^.{2,4}$/, message: '长度在 2 到 4 个字符' },
+    { key: 'sign', type: 'required', message: '必填' }
+  ]
+  // 声明验证规则
+  Object.assign(errors,{
+    name: [],
+    sign: []
+  })
+  Object.assign(errors, validate(formData, rules));
+  
+  // errors = {
+  //   name: ['错误1', '错误2'],
+  //   sign: ['错误1', '错误2']
+  // } 错误类型
+  
+};
   
 </script>
 
@@ -72,8 +107,6 @@ const formData = reactive({
 }
 .formRow {
   margin-top: 8px;
-}
-.formLabel {
 }
 .formItem {
   min-height: var(--input-min-height);
@@ -95,8 +128,6 @@ const formData = reactive({
     }
   }
   
-  &-name {
-  }
   &-value {
     display: flex;
     margin-top: 4px;

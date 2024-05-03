@@ -51,6 +51,7 @@
   // 点击tab，触发父组件的update-selected自定义事件
   const select = (title: string) => {
     emits('update-selected', title)
+    // 传递出去的是一个方法
   }
 
 </script>
