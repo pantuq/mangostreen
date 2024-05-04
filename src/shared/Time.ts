@@ -14,7 +14,7 @@
  */
 export class Time {
     date: Date
-    constructor(date: Date) {
+    constructor(date = new Date()) {
         this.date = date
     }
     Formt (pattern: string) {
@@ -63,6 +63,9 @@ export class Time {
         const lastDay = new Date(this.date.getFullYear() + 1, 0, 0, 0, 0, 0)
         return new Time(lastDay)
     }
+    getRaw(){
+        return this.date
+    }
     add(amount: number, unit: 'year' | 'month' | 'day' | 'hour' | 'minute' | 'second' | 'millisecond'){
         // return new Time but not change this.date
         const date = new Date(this.date.getTime())
@@ -95,6 +98,7 @@ export class Time {
             default:
                 throw new Error('unit is not valid')
         }
+        return new Time(date)
     }
 }
 
