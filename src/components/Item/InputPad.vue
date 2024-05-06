@@ -5,7 +5,11 @@
         <svgIcon name="date" color="white" width="24" height="24"></svgIcon>
         <span @click="showPopup">{{ FormData() }}</span>
         <van-popup v-model:show="show" position="bottom" :style="{ height: '50%' }">
-          <van-date-picker v-model="nowDate" title="选择年月" @confirm="onConfirm()" @cancel="onCancel" />
+          <van-date-picker 
+          v-model="nowDate" 
+          title="选择年月" 
+          @confirm="onConfirm()" 
+          @cancel="onCancel" />
         </van-popup>
       </span>
       <span class="amount">{{amount}}</span>

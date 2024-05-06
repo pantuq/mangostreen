@@ -17,7 +17,7 @@ export class Time {
     constructor(date = new Date()) {
         this.date = date
     }
-    Formt (pattern: string) {
+    Formt (pattern = 'YYYY-MM-DD') {
         // 对时间进行格式化
         // YYYY-MM-DD hh:mm:ss.ms
         const year = this.date.getFullYear()

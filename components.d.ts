@@ -7,12 +7,14 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    EndFormItem: typeof import('./src/components/Item/EndFormItem.vue')['default']
     InputPad: typeof import('./src/components/Item/InputPad.vue')['default']
     ItemCreate: typeof import('./src/components/Item/ItemCreate.vue')['default']
     ItemList: typeof import('./src/components/Item/ItemList.vue')['default']
     ItemSummary: typeof import('./src/components/Item/ItemSummary.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StartFormItem: typeof import('./src/components/Item/StartFormItem.vue')['default']
     TagCreate: typeof import('./src/components/Tag/TagCreate.vue')['default']
     TagEdit: typeof import('./src/components/Tag/TagEdit.vue')['default']
     TagForm: typeof import('./src/components/Tag/TagForm.vue')['default']
