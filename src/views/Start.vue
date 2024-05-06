@@ -9,6 +9,8 @@
         </template>
       </NavBar>
 
+      <OverLay v-show="overlayVisible" @close-mask="overlayClose"></OverLay>
+
     
       <div class="pig_wrapper">
       <Center class="pig">
@@ -26,7 +28,7 @@
     
     <FloatButton></FloatButton>
 
-    <OverLay v-show="overlayVisible" @close-mask="overlayClose"></OverLay>
+    
   </div>
 </template>
 

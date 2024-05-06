@@ -20,6 +20,7 @@ declare module 'vue' {
     TagForm: typeof import('./src/components/Tag/TagForm.vue')['default']
     VanDatePicker: typeof import('vant/es')['DatePicker']
     VanDatetimePicker: typeof import('vant/es')['DatetimePicker']
+    VanOverlay: typeof import('vant/es')['Overlay']
     VanPopup: typeof import('vant/es')['Popup']
     WelcomeFourAction: typeof import('./src/components/welcome/WelcomeAction/WelcomeFourAction.vue')['default']
     WelcomeFourCard: typeof import('./src/components/welcome/WelcomeCard/WelcomeFourCard.vue')['default']

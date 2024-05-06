@@ -2,7 +2,7 @@
   <div class="ItemList">
     <NavBar>
       <template #icon>
-        <svgIcon name="menu" color="white" width="26px" height="26px"/>
+        <svgIcon name="menu" color="white" width="26px" height="26px" @click="onClickMenu"/>
       </template>
       <template #title>
         <span>山竹记账</span>
@@ -22,7 +22,7 @@
         <ItemSummary :startDate="customTime.start.FormData()" :endDate="customTime.end.FormData()" />
       </Tab>
     </Tabs>
-    <Overlay :show="overlayVisible" class="overlay" @click="hideOverlay">
+    <van-overlay :show="overlayVisible" class="overlay" @click="hideOverlay">
       <div class="overlay_inner">
         <header>
           请选择时间
@@ -40,7 +40,8 @@
           </form>
         </main>
       </div>
-    </Overlay>
+    </van-overlay>
+    <OverLay v-show="menuVisible" @close-mask="hideMenu" />
   </div>
 </template>
 
@@ -51,7 +52,7 @@ import Tab from '../../shared/Tab.vue';
 import { reactive, ref } from 'vue';
 import ItemSummary from './ItemSummary.vue';
 import { Time } from '../../shared/Time';
-import { Overlay } from 'vant';
+import  OverLay  from '../../shared/OverLay.vue';
 import StartFormItem from './StartFormItem.vue';
 import EndFormItem from './EndFormItem.vue';
 
@@ -114,6 +115,14 @@ const onEndDateChange = (endDate: any) => {
   console.log(endDate);
 }
 
+
+const menuVisible = ref(false)
+const onClickMenu = () => {
+  menuVisible.value = !menuVisible.value
+}
+const hideMenu = () => {
+  menuVisible.value = false
+}
 </script>
 
 <style lang="scss" scoped>
