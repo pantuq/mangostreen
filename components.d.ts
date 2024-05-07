@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    Charts: typeof import('./src/components/Statistics/Charts.vue')['default']
     EndFormItem: typeof import('./src/components/Item/EndFormItem.vue')['default']
     InputPad: typeof import('./src/components/Item/InputPad.vue')['default']
     ItemCreate: typeof import('./src/components/Item/ItemCreate.vue')['default']
