@@ -16,13 +16,14 @@
       </ul>
       </div>
     </div>
-
+    <div class="chart" ref="refDiv"></div>
+    <div class="chart" ref="refDiv2"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-
+import { onMounted, ref } from 'vue';
+import * as echarts from 'echarts';
 
 
   defineProps({
@@ -43,6 +44,63 @@ const openSelect = () => {
 
 const kind = ref('expenses')
 
+const refDiv = ref<HTMLDivElement>()
+const refDiv2 = ref<HTMLDivElement>()
+
+onMounted(() => {
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(refDiv.value!);
+  // 绘制图表
+  const option = {
+    grid: [
+      { left: 0, top: 20, right: 0,  }
+    ],
+    xAxis: {
+      type: 'category',
+      data: ['A', 'B', 'C']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [
+      {
+        data: [120, 200, 150],
+        type: 'line'
+      }
+    ]
+  };
+  myChart.setOption(option);
+})
+
+onMounted(() => {
+  // 基于准备好的dom，初始化echarts实例
+  var myChart = echarts.init(refDiv2.value!);
+  // 绘制图表
+  const option = {
+    grid: [
+      { left: 0, top: 20, right: 0,  }
+    ],
+    series: [{
+      type: 'pie',
+      data: [
+        {
+          value: 335,
+          name: '直接访问'
+        },
+        {
+          value: 234,
+          name: '联盟广告'
+        },
+        {
+          value: 1548,
+          name: '搜索引擎'
+        }
+      ],
+      radius: '50%'
+    }]
+};
+  myChart.setOption(option);
+})
 
 
 </script>
@@ -77,6 +135,10 @@ const kind = ref('expenses')
           color: white;
         }
       }
+    }
+    > .chart {
+      height: 190px;
+      padding: 8px;
     }
   }
 </style>
