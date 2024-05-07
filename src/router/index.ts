@@ -16,6 +16,7 @@ import ItemCreate from '../components/Item/ItemCreate.vue'
 import TagPage from "../views/TagPage.vue"
 import TagCreate from '../components/Tag/TagCreate.vue'
 import TagEdit from '../components/Tag/TagEdit.vue'
+import SignInPageVue from "../views/SignInPage.vue"
 
 
 const router = createRouter({
@@ -38,7 +39,8 @@ const router = createRouter({
         {path: '/tags',component: TagPage,children: [
             { path: 'create', component: TagCreate},
             { path: ':id/edit', component: TagEdit},
-        ]}
+        ]},
+        { path: '/sign_in', component: SignInPageVue}
         
     ]
 })
