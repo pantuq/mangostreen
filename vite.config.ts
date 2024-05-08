@@ -24,4 +24,12 @@ export default defineConfig({
       resolvers: [VantResolver()],
     }),
   ],
+  server: {
+    proxy: {
+      '/api/v1': {
+        target: 'https://mangosteen2.hunger-valley.com'
+        // 将"/api/v1"代理 转发到"https://mangosteen2.hunger-valley.com"
+      }
+    }
+  }
 })
