@@ -38,7 +38,10 @@
             v-model="formData.smsCode"
             placeholder="请输入六位数字"
             >
-            <Button>发送验证码</Button>
+            <Button 
+            :disabled="isCounting" 
+            @click="onClickSendValidateCode"
+            >{{ isCounting ? `${count}秒后可重新点击` : '发送验证码' }}</Button>
             <div class="error-hint">
                 <span>{{ errors.smsCode?.[0] }}</span>
                 <span>&nbsp;</span>
@@ -54,9 +57,10 @@
 <script lang="ts" setup>
 import NavBar from '../shared/NavBar.vue'
 import Button from '../shared/Button.vue';
-import { reactive } from 'vue';
+import { computed, reactive, ref } from 'vue';
 import { validate } from '../shared/Validate';
 import Center from '../shared/Center.vue';
+import axios from 'axios';
   
 const formData = reactive({
     email: '',
@@ -80,6 +84,26 @@ const handleSubmit = (e: Event) => {
         {key: 'email', type: 'pattern', regex: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:'邮箱格式错误'},
         {key: 'smsCode', type: 'required', message:'必填'},
     ]))
+}
+
+const onClickSendValidateCode = async () => {
+    const response = await axios.post('/api/v1/validation_codes', { email: formData.email })
+    console.log(response);
+    conutDown()
+}
+
+const timer = ref()
+const count = ref<number>(3)
+const isCounting = computed(() => !!timer.value)
+const conutDown = () => {
+    timer.value = setInterval(() => {
+        count.value--
+        if (count.value === 0) {
+            clearInterval(timer.value)
+            timer.value = undefined
+            count.value = 3
+        }
+    }, 1000)
 }
 </script>
 
@@ -107,6 +131,10 @@ const handleSubmit = (e: Event) => {
             > Button {
                 margin-left: 8px;
                 width: calc(100% - 9em);
+                &:disabled {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                }
             }
             > .error-hint {
                 margin-top: 4px;
