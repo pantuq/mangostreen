@@ -8,9 +8,6 @@
 import { PropType } from 'vue';
 
 defineProps({
-  onClick: {
-    type: Function
-  },
   level: {
     type: String as PropType<'important' | 'normal' | 'danger'>,
     default: 'normal'
