@@ -35,7 +35,7 @@
             <input 
             class="sms-code" 
             type="text"
-            v-model="formData.smsCode"
+            v-model="formData.code"
             placeholder="请输入六位数字"
             >
             <Button 
@@ -43,7 +43,7 @@
             @click="onClickSendValidateCode"
             >{{ isCounting ? `${count}秒后可重新点击` : '发送验证码' }}</Button>
             <div class="error-hint">
-                <span>{{ errors.smsCode?.[0] }}</span>
+                <span>{{ errors.code?.[0] }}</span>
                 <span>&nbsp;</span>
             </div>
         </div>
@@ -61,35 +61,80 @@ import { computed, reactive, ref } from 'vue';
 import { validate } from '../shared/Validate';
 import Center from '../shared/Center.vue';
 import axios from 'axios';
+import router from '../router';
+import { yierRequest2 } from '../service';
+// import { http } from '../shared/Http';
   
 const formData = reactive({
-    email: '',
-    smsCode: '',
+    email: 'tuq_5986@163.com',
+    code: '',
 })
 
 const errors = reactive({
     email: [],
-    smsCode: [],
+    code: [],
 })
 
-const handleSubmit = (e: Event) => {
+const hasError = (errors: Record<string, string[]>) => {
+    let res = false
+    for(let key in errors){
+        if(errors[key].length > 0){
+            res = true
+            break
+        }
+    }
+    return res
+}
+
+const handleSubmit =async (e: Event) => {
     e.preventDefault();
     Object.assign(errors, {
         email: [],
-        smsCode: [],
+        code: [],
     })
     Object.assign(errors, validate(formData,[
         // 用assign覆盖常量
         {key: 'email', type: 'required', message:'必填'},
         {key: 'email', type: 'pattern', regex: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/, message:'邮箱格式错误'},
-        {key: 'smsCode', type: 'required', message:'必填'},
+        {key: 'code', type: 'required', message:'必填'},
     ]))
+    if (!hasError(errors)) {
+    console.log('no error')
+    const response = await yierRequest2.post({
+      url: '/api/v1/session',
+      params: {
+        email: formData.email,
+        code: formData.code
+      }
+    })
+    localStorage.setItem('jwt', response.jwt)
+    // const returnTo = route.query.return_to?.toString()
+    // console.log(returnTo, 'returnto---')
+    // router.push(returnTo ? returnTo : '/')
+    router.push('/items/list')
+  }
 }
 
+const onError = (error: any) => {
+    if (error.response.status === 422) {
+        Object.assign(errors, error.response.data.errors)
+    }
+    throw error
+}
+
+
 const onClickSendValidateCode = async () => {
-    const response = await axios.post('/api/v1/validation_codes', { email: formData.email })
+    const response = await yierRequest2
+    .post({
+        url: '/api/v1/validation_codes',
+        params: {
+            email: formData.email,
+        }
+    }).then(() => {
+        conutDown()
+    })
+    .catch(onError)
     console.log(response);
-    conutDown()
 }
 
 const timer = ref()
