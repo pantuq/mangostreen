@@ -18,6 +18,7 @@ import TagCreate from '../components/Tag/TagCreate.vue'
 import TagEdit from '../components/Tag/TagEdit.vue'
 import SignInPageVue from "../views/SignInPage.vue"
 import StatisticsPageVue from "../views/StatisticsPage.vue"
+import { refreshMe } from "../service/login/refreshMe"
 
 
 const router = createRouter({
@@ -36,7 +37,8 @@ const router = createRouter({
             { path: '4', components: {main: WelcomeFourCard, footer: WelcomeFourAction}}
         ]},
         {path: '/start', component: Start},
-        {path: '/items', component: ItemPage, children: [
+        {path: '/items', component: ItemPage,
+         children: [
             { path: '', redirect: '/items/list'},
             { path: 'list', component: ItemList},
             { path: 'create', component: ItemCreate}
@@ -49,6 +51,30 @@ const router = createRouter({
         { path: '/statistics', component: StatisticsPageVue}
         
     ]
+})
+
+router.beforeEach(async (to, from) => {
+    if(
+        to.path === '/' ||
+        to.path.startsWith('/welcome') ||
+        to.path === '/start' ||
+        to.path === '/sign_in'
+        // 路由守卫白名单
+    ){
+        return true
+    } else {
+    await refreshMe().catch(() => {
+        localStorage.removeItem('jwt')
+        // 如果refreshMe失败 移除jwt
+    })
+
+    if(!localStorage.getItem('jwt')){
+        return 'sign_in?return_to=' + to.path
+        // 如果没有jwt 跳转到登录页
+    }else {
+        return true
+    }
+  }
 })
 
 export default router
