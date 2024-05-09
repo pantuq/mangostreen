@@ -1,13 +1,17 @@
 <template>
  <div class="action">
-    <RouterLink class="fake" to="/start">跳过</RouterLink>
-    <RouterLink to="/start">下一页</RouterLink>
-    <RouterLink class="fake" to="/start">跳过</RouterLink>
+    <SkipFeature class="fake"></SkipFeature>
+    <RouterLink to="/start" @click="setSkip">下一页</RouterLink>
+    <SkipFeature class="fake"></SkipFeature>
   </div>
 </template>
 
 <script setup>
+import SkipFeature from '../../../shared/SkipFeature.vue';
   
+const setSkip = () => {
+    localStorage.setItem('skip', 'yes');
+  };
 </script>
 
 <style lang="scss" scoped>

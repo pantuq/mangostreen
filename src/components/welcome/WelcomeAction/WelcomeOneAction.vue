@@ -1,12 +1,14 @@
 <template>
   <div class="action">
-    <RouterLink class="fake" to="/start">跳过</RouterLink>
+    <SkipFeature class="fake"></SkipFeature>
     <RouterLink to="/welcome/2">下一页</RouterLink>
-    <RouterLink to="/start">跳过</RouterLink>
+    <SkipFeature></SkipFeature>
 </div>
 </template>
 
 <script setup>
+import SkipFeature from '../../../shared/SkipFeature.vue';
+
   
 </script>
 

@@ -24,7 +24,11 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {path: '/', redirect: '/welcome'},
-        {path: '/welcome',component: Welcome, children: [
+        {path: '/welcome',component: Welcome, 
+        beforeEnter: (to, from, next) => {
+            localStorage.getItem('skip') === 'yes' ? next('/start') : next()
+        },
+         children: [
             { path: '', redirect: '/welcome/1'},
             { path: '1', components: {main: WelcomeOneCard, footer: WelcomeOneAction}},
             { path: '2', components: {main: WelcomeTwoCard, footer: WelcomeTwoAction}},
