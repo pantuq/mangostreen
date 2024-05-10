@@ -7,18 +7,12 @@
         <template #title>
           <span>记一笔</span>
         </template>
-      </NavBar>
+    </NavBar>
+
       <div class="content">
         <Tabs class="tabs" :selected="tabKind" @update-selected='onUpdateSelected'>
           <Tab title="支出" class="tags_wrapper">
-            <div class="tag">
-              <div class="sign">
-                <svgIcon class="createTag" name="addTag" color="white" width="26px" height="26px"></svgIcon>
-              </div>
-              <div class="name">
-                新增
-              </div>
-            </div>
+            <Tags></Tags>
             <div class="tag selected" v-for="item in expensesTags">
               <div class="sign">
                 {{ item.sign }}
@@ -28,15 +22,9 @@
               </div>
             </div>
           </Tab>
+
           <Tab title="收入" class="tags_wrapper">
-            <div class="tag">
-              <div class="sign">
-                <svgIcon class="createTag" name="addTag" color="white" width="26px" height="26px"></svgIcon>
-              </div>
-              <div class="name">
-                新增
-              </div>
-            </div>
+            <Tags></Tags>
             <div class="tag selected" v-for="item in incomeTags">
               <div class="sign">
                 {{ item.sign }}
@@ -48,6 +36,7 @@
           </Tab>
         </Tabs>
       </div>
+      
       <div class="inputPad_wrapper">
         <InputPad></InputPad>
       </div>
@@ -60,6 +49,7 @@ import Tabs from '../../shared/Tabs.vue'
 import Tab from '../../shared/Tab.vue'
 import {ref} from 'vue'
 import InputPad from './InputPad.vue';
+import Tags from './Tags.vue';
 
 let tabKind = ref('支出')
 // 监听tab切换
