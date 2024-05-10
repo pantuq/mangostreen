@@ -24,6 +24,9 @@
 import { Time } from '../../shared/Time';
 import { ref } from 'vue';
 
+
+const emit = defineEmits(['sendDateAndTime'])
+
 const buttonMap = [
   {text: '1',onClick: () => {appendAmount(1)}},
   {text: '2',onClick: () => {appendAmount(2)}},
@@ -37,7 +40,9 @@ const buttonMap = [
   {text: '.',onClick: () => {appendAmount('.')}},
   {text: '0',onClick: () => {appendAmount(0)}},
   {text: '清空',onClick: () => {amount.value = ''}},
-  {text: '提交',onClick: () => {}},
+  {text: '提交',onClick: () => {
+    emit('sendDateAndTime',{happenAt: new Time(now).date.toISOString(),amount: 100 * Number(amount.value)})
+  }},
 
 ]
 

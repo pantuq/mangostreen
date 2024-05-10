@@ -13,6 +13,7 @@
         <Tabs class="tabs" :selected="tabKind" @update-selected='onUpdateSelected'>
           <Tab title="支出" class="tags_wrapper">
             <Tags></Tags>
+
             <div class="tag selected" v-for="item in expensesTags">
               <div class="sign">
                 {{ item.sign }}
@@ -24,7 +25,9 @@
           </Tab>
 
           <Tab title="收入" class="tags_wrapper">
+
             <Tags></Tags>
+            
             <div class="tag selected" v-for="item in incomeTags">
               <div class="sign">
                 {{ item.sign }}
@@ -36,9 +39,9 @@
           </Tab>
         </Tabs>
       </div>
-      
+
       <div class="inputPad_wrapper">
-        <InputPad></InputPad>
+        <InputPad @send-date-and-time="onSendDateAndTime"></InputPad>
       </div>
   </div>
 </template>
@@ -54,7 +57,8 @@ import Tags from './Tags.vue';
 let tabKind = ref('支出')
 // 监听tab切换
 const onUpdateSelected = (title: string) => tabKind.value = title
-  
+
+
 const expensesTags = ref([
   { id: 1, name: '餐费', sign: '￥', category: 'expenses' },
   { id: 2, name: '打车', sign: '￥', category: 'expenses' },
@@ -102,6 +106,11 @@ const incomeTags = ref([
   { id: 17, name: '彩票', sign: '￥', category: 'income' },
   { id: 19, name: '滴滴', sign: '￥', category: 'income' },
 ])
+
+const onSendDateAndTime = (date: number[],amount:string) => {
+  console.log(date)
+  console.log(amount);
+}
 </script>
 
 <style lang="scss" scoped>
