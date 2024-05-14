@@ -37,6 +37,6 @@ type Item = {
 type accountingData = {
   kind: 'expenses' | 'income' | string;
   tag_ids: number[];
-  amount: string;
-  happened_at: number[];
+  amount: number;
+  happened_at: string;
 }

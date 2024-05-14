@@ -2,7 +2,7 @@
   <div class="ItemCreate">
     <NavBar>
         <template #icon>
-          <svgIcon name="exit" color="white" width="26px" height="26px"></svgIcon>
+          <svgIcon name="exit" color="white" width="26px" height="26px" @click="exit"></svgIcon>
         </template>
         <template #title>
           <span>记一笔</span>
@@ -14,10 +14,10 @@
           <Tab title="支出" class="tags_wrapper">
             <Tags @click="addTag"></Tags>
 
-            <div class="tag selected" v-for="(item,index) in expensesTags"
+            <div class="tag" v-for="(item,index) in expensesTags"
             :key="index"
             @click="tagSelect(item.id, item.kind)">
-              <div class="sign">
+              <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
                 {{ item.sign }}
               </div>
               <div class="name">
@@ -30,10 +30,10 @@
 
             <Tags @click="addTag"></Tags>
             
-            <div class="tag selected" v-for="(item,index) in incomeTags"
+            <div class="tag" v-for="(item,index) in incomeTags"
             :key="index"
             @click="tagSelect(item.id, item.kind)">
-              <div class="sign">
+              <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
                 {{ item.sign }}
               </div>
               <div class="name">
@@ -59,6 +59,7 @@ import InputPad from './InputPad.vue';
 import Tags from './Tags.vue';
 import yierRequest1, { yierRequest2 } from '../../service';
 import { useRoute, useRouter } from 'vue-router';
+import { number } from 'echarts';
 
 let tabKind = ref('支出')
 // 监听tab切换
@@ -71,13 +72,16 @@ const expensesTags = ref<Tag[]>([])
 const incomeTags = ref<Tag[]>([])
 const accountingData = reactive<accountingData>({
   kind: 'expenses',
-  amount: '',
-  happened_at: [],
+  amount: 0,
+  happened_at: '',
   tag_ids: [],
 })
 const newTagKind = computed(() => {
   return tabKind.value === '支出' ? 'expenses' : 'income'
 })
+const exit = () => {
+  router.push('/items/list')
+}
 
 onMounted(async() => {
   await yierRequest1.get({
@@ -119,11 +123,16 @@ const tagSelect = (id: number,kind: string) => {
   selectedId.value = id
   accountingData.tag_ids[0] = id
   accountingData.kind = kind
+  console.log(accountingData,'accountingData');
+  
 }
 
- async function onSendDateAndTime(date: number[],amount:string) {
+ async function onSendDateAndTime(date: string,amount:number) {
   accountingData.amount = amount
+  console.log(amount,'amount');
+  
   accountingData.happened_at = date
+  console.log(date,'date');
   await yierRequest2.post({
     url: '/api/v1/items',
     data: {
@@ -136,6 +145,7 @@ const tagSelect = (id: number,kind: string) => {
     console.log(res)
   }).catch((err) => {
     console.log(err,'create error')
+    console.log(accountingData)
   })
 }
 </script>
@@ -187,10 +197,8 @@ const tagSelect = (id: number,kind: string) => {
     font-size: 12px;
     margin-top: 4px;
   }
-  &.selected {
-    .sign {
-      border-color: var(--main);
-    }
+  .selected {
+    border-color: var(--main);
   }
 }
 </style>

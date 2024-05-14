@@ -41,7 +41,7 @@ const buttonMap = [
   {text: '0',onClick: () => {appendAmount(0)}},
   {text: '清空',onClick: () => {amount.value = ''}},
   {text: '提交',onClick: () => {
-    emit('sendDateAndTime',{happenAt: new Time(now).date.toISOString(),amount: 100 * Number(amount.value)})
+    emit('sendDateAndTime',new Time(now).date.toISOString(), 100 * Number(amount.value))
   }},
 
 ]
