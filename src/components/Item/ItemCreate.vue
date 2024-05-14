@@ -2,13 +2,7 @@
   <div class="ItemCreate">
     <NavBar>
       <template #icon>
-        <svgIcon
-          name="exit"
-          color="white"
-          width="26px"
-          height="26px"
-          @click="exit"
-        ></svgIcon>
+        <BackIcon></BackIcon>
       </template>
       <template #title>
         <span>记一笔</span>
@@ -75,6 +69,7 @@ import Tags from "./Tags.vue";
 import yierRequest1, { yierRequest2 } from "../../service";
 import { useRoute, useRouter } from "vue-router";
 import { number } from "echarts";
+import BackIcon from "../../shared/BackIcon.vue";
 
 let tabKind = ref("支出");
 // 监听tab切换

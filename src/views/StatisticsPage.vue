@@ -2,7 +2,7 @@
   <div class="StatisticPage">
     <NavBar>
       <template #icon>
-        <svgIcon name="exit" color="white" width="26px" height="26px" />
+        <BackIcon></BackIcon>
       </template>
       <template #title>
         <span>统计图表</span>
@@ -69,6 +69,7 @@ import Tabs from "../shared/Tabs.vue";
 import { reactive, ref } from "vue";
 import { Time } from "../shared/Time";
 import Charts from "../components/Statistics/Charts.vue";
+import BackIcon from "../shared/BackIcon.vue";
 
 const tabKind = ref("本月");
 const overlayVisible = ref(false);

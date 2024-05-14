@@ -2,7 +2,7 @@
   <div class="SignInPage">
     <NavBar>
       <template #icon>
-        <svgIcon name="exit" color="white" width="26px" height="26px"></svgIcon>
+        <BackIcon></BackIcon>
       </template>
       <template #title>
         <span>登录</span>
@@ -67,6 +67,7 @@ import Center from "../shared/Center.vue";
 import axios from "axios";
 import router from "../router";
 import { yierRequest2 } from "../service";
+import BackIcon from "../shared/BackIcon.vue";
 // import { http } from '../shared/Http';
 
 const formData = reactive({
