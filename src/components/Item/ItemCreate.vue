@@ -124,15 +124,11 @@ const tagSelect = (id: number,kind: string) => {
   accountingData.tag_ids[0] = id
   accountingData.kind = kind
   console.log(accountingData,'accountingData');
-  
 }
 
  async function onSendDateAndTime(date: string,amount:number) {
   accountingData.amount = amount
-  console.log(amount,'amount');
-  
   accountingData.happened_at = date
-  console.log(date,'date');
   await yierRequest2.post({
     url: '/api/v1/items',
     data: {
@@ -141,8 +137,8 @@ const tagSelect = (id: number,kind: string) => {
       amount: accountingData.amount,
       tag_ids: accountingData.tag_ids
     }
-  }).then((res) => {
-    console.log(res)
+  }).then(() => {
+    router.push('/items')
   }).catch((err) => {
     console.log(err,'create error')
     console.log(accountingData)
