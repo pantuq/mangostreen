@@ -29,7 +29,8 @@
           </div>
           <div class="time">2019-01-01</div>
         </div>
-      </li><li>
+      </li>
+      <li>
         <div class="sign">
           <span>X</span>
         </div>
@@ -40,7 +41,8 @@
           </div>
           <div class="time">2019-01-01</div>
         </div>
-      </li><li>
+      </li>
+      <li>
         <div class="sign">
           <span>X</span>
         </div>
@@ -51,7 +53,8 @@
           </div>
           <div class="time">2019-01-01</div>
         </div>
-      </li><li>
+      </li>
+      <li>
         <div class="sign">
           <span>X</span>
         </div>
@@ -66,30 +69,27 @@
     </ol>
     <div class="more">向下滑动加载更多</div>
     <FloatButton></FloatButton>
-
   </div>
 </template>
 
 <script lang="ts" setup>
 // import { PropType } from 'vue';
-import FloatButton from '../../shared/FloatButton.vue'
-
+import FloatButton from "../../shared/FloatButton.vue";
 
 defineProps({
   startDate: {
     // type: String as PropType<string>,
-    required: true
+    required: true,
   },
   endDate: {
     // type: String as PropType<string>,
-    required: true
-  }
-})
-  
+    required: true,
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-  .ItemSummary {
+.ItemSummary {
 }
 .total {
   background: var(--total-bg);
@@ -112,7 +112,7 @@ defineProps({
     }
   }
 }
-.list{
+.list {
   > li {
     display: flex;
     justify-content: space-between;
@@ -120,7 +120,7 @@ defineProps({
     border-bottom: 1px solid var(--button-border-color);
     padding: 12px 16px;
   }
-  .sign{
+  .sign {
     flex-grow: 0;
     flex-shrink: 0;
     width: 48px;
@@ -132,28 +132,28 @@ defineProps({
     align-items: center;
     margin: 0 8px;
   }
-  .text{
+  .text {
     margin-right: 4px;
     margin-left: 4px;
     flex-grow: 1;
     flex-shrink: 1;
-    .tagAndAmount{
+    .tagAndAmount {
       display: flex;
       justify-content: space-between;
-      .tag{
+      .tag {
         color: var(--list-tag-text);
       }
-      .amount{
+      .amount {
         color: var(--list-amount-text);
       }
     }
-    .time{
+    .time {
       color: var(--list-time-text);
       margin-top: 4px;
     }
   }
 }
-.more{
+.more {
   padding-top: 32px;
   text-align: center;
 }

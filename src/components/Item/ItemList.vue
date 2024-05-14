@@ -2,36 +2,58 @@
   <div class="ItemList">
     <NavBar>
       <template #icon>
-        <svgIcon name="menu" color="white" width="26px" height="26px" @click="onClickMenu"/>
+        <svgIcon
+          name="menu"
+          color="white"
+          width="26px"
+          height="26px"
+          @click="onClickMenu"
+        />
       </template>
       <template #title>
         <span>山竹记账</span>
       </template>
     </NavBar>
-    <Tabs :selected="tabKind" @update-selected='onUpdateSelected'>
+    <Tabs :selected="tabKind" @update-selected="onUpdateSelected">
       <Tab title="本月">
-        <ItemSummary :startDate="timeList[0].start.FormData()" :endDate="timeList[0].end.FormData()" />
+        <ItemSummary
+          :startDate="timeList[0].start.FormData()"
+          :endDate="timeList[0].end.FormData()"
+        />
       </Tab>
       <Tab title="上月">
-        <ItemSummary :startDate="timeList[1].start.FormData()" :endDate="timeList[1].end.FormData()" />
+        <ItemSummary
+          :startDate="timeList[1].start.FormData()"
+          :endDate="timeList[1].end.FormData()"
+        />
       </Tab>
       <Tab title="今年">
-        <ItemSummary :startDate="timeList[2].start.FormData()" :endDate="timeList[2].end.FormData()" />
+        <ItemSummary
+          :startDate="timeList[2].start.FormData()"
+          :endDate="timeList[2].end.FormData()"
+        />
       </Tab>
       <Tab title="自定义时间">
-        <ItemSummary :startDate="customTime.start.FormData()" :endDate="customTime.end.FormData()" />
+        <ItemSummary
+          :startDate="customTime.start.FormData()"
+          :endDate="customTime.end.FormData()"
+        />
       </Tab>
     </Tabs>
     <van-overlay :show="overlayVisible" class="overlay" @click="hideOverlay">
       <div class="overlay_inner">
-        <header>
-          请选择时间
-        </header>
+        <header>请选择时间</header>
         <main>
           <form @submit="onSubmitCustomTime">
             <div @click="protectContent">
-              <StartFormItem title="开始时间" @start-date-change="onStartDateChange"></StartFormItem>
-              <EndFormItem title="结束时间" @end-date-change="onEndDateChange"></EndFormItem>
+              <StartFormItem
+                title="开始时间"
+                @start-date-change="onStartDateChange"
+              ></StartFormItem>
+              <EndFormItem
+                title="结束时间"
+                @end-date-change="onEndDateChange"
+              ></EndFormItem>
             </div>
             <div class="button-wrapper">
               <button @click="hideOverlay" type="submit">确定</button>
@@ -46,87 +68,83 @@
 </template>
 
 <script lang="ts" setup>
-import NavBar from '../../shared/NavBar.vue';
-import Tabs from '../../shared/Tabs.vue';
-import Tab from '../../shared/Tab.vue';
-import { reactive, ref } from 'vue';
-import ItemSummary from './ItemSummary.vue';
-import { Time } from '../../shared/Time';
-import  OverLay  from '../../shared/OverLay.vue';
-import StartFormItem from './StartFormItem.vue';
-import EndFormItem from './EndFormItem.vue';
+import NavBar from "../../shared/NavBar.vue";
+import Tabs from "../../shared/Tabs.vue";
+import Tab from "../../shared/Tab.vue";
+import { reactive, ref } from "vue";
+import ItemSummary from "./ItemSummary.vue";
+import { Time } from "../../shared/Time";
+import OverLay from "../../shared/OverLay.vue";
+import StartFormItem from "./StartFormItem.vue";
+import EndFormItem from "./EndFormItem.vue";
 
-
-const tabKind = ref('本月')
-const overlayVisible = ref(false)
+const tabKind = ref("本月");
+const overlayVisible = ref(false);
 const onUpdateSelected = (title: string) => {
-  tabKind.value = title
+  tabKind.value = title;
   // 在切换tab时，判断是否是自定义时间，如果是，则显示overlay
-  showOverlay()
-}
+  showOverlay();
+};
 
 const onSubmitCustomTime = (e: Event) => {
-  e.preventDefault()
-}
+  e.preventDefault();
+};
 
 const protectContent = (e: Event) => {
   // 冒泡阻止
-  e.stopPropagation()
-}
+  e.stopPropagation();
+};
 
-
-const time = new Time(new Date())
+const time = new Time(new Date());
 const customTime = reactive({
   start: new Time(),
-  end: new Time()
-})
+  end: new Time(),
+});
 const timeList = [
   {
     start: time.firstDayOfMonth(),
-    end: time.lastDayOfMonth()
+    end: time.lastDayOfMonth(),
   },
   {
-    start: time.add(-1, 'month')?.firstDayOfMonth(),
-    end: time.add(-1, 'month')?.lastDayOfMonth()
+    start: time.add(-1, "month")?.firstDayOfMonth(),
+    end: time.add(-1, "month")?.lastDayOfMonth(),
   },
   {
     start: time.firstDayOfYear(),
-    end: time.lastDayOfYear()
+    end: time.lastDayOfYear(),
   },
-]
-
+];
 
 const showOverlay = () => {
-  if(tabKind.value === '自定义时间'){
-    overlayVisible.value = true
-  }else{
-    overlayVisible.value = false
+  if (tabKind.value === "自定义时间") {
+    overlayVisible.value = true;
+  } else {
+    overlayVisible.value = false;
   }
-}
+};
 const hideOverlay = () => {
-  overlayVisible.value = false
+  overlayVisible.value = false;
   // 日期选择结束，隐藏overlay
-}
+};
 
 const onStartDateChange = (startDate: any) => {
   console.log(startDate);
-}
+};
 const onEndDateChange = (endDate: any) => {
   console.log(endDate);
-}
+};
 
-
-const menuVisible = ref(false)
+const menuVisible = ref(false);
 const onClickMenu = () => {
-  menuVisible.value = !menuVisible.value
-}
+  menuVisible.value = !menuVisible.value;
+};
 const hideMenu = () => {
-  menuVisible.value = false
-}
+  menuVisible.value = false;
+};
 </script>
 
 <style lang="scss" scoped>
-  .ItemList {
+.ItemList {
 }
 .overlay {
   display: flex;
@@ -142,7 +160,7 @@ const hideMenu = () => {
       padding: 12px 16px;
       color: var(--dialog-header-text);
     }
-    > main{
+    > main {
       > form {
         > .button-wrapper {
           display: flex;

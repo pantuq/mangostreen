@@ -1,153 +1,181 @@
 <template>
   <div class="ItemCreate">
     <NavBar>
-        <template #icon>
-          <svgIcon name="exit" color="white" width="26px" height="26px" @click="exit"></svgIcon>
-        </template>
-        <template #title>
-          <span>记一笔</span>
-        </template>
+      <template #icon>
+        <svgIcon
+          name="exit"
+          color="white"
+          width="26px"
+          height="26px"
+          @click="exit"
+        ></svgIcon>
+      </template>
+      <template #title>
+        <span>记一笔</span>
+      </template>
     </NavBar>
 
-      <div class="content">
-        <Tabs class="tabs" :selected="tabKind" @update-selected='onUpdateSelected'>
-          <Tab title="支出" class="tags_wrapper">
-            <Tags @click="addTag"></Tags>
+    <div class="content">
+      <Tabs
+        class="tabs"
+        :selected="tabKind"
+        @update-selected="onUpdateSelected"
+      >
+        <Tab title="支出" class="tags_wrapper">
+          <Tags @click="addTag"></Tags>
 
-            <div class="tag" v-for="(item,index) in expensesTags"
+          <div
+            class="tag"
+            v-for="(item, index) in expensesTags"
             :key="index"
-            @click="tagSelect(item.id, item.kind)">
-              <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
-                {{ item.sign }}
-              </div>
-              <div class="name">
-                {{ item.name }}
-              </div>
+            @click="tagSelect(item.id, item.kind)"
+          >
+            <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
+              {{ item.sign }}
             </div>
-          </Tab>
+            <div class="name">
+              {{ item.name }}
+            </div>
+          </div>
+        </Tab>
 
-          <Tab title="收入" class="tags_wrapper">
+        <Tab title="收入" class="tags_wrapper">
+          <Tags @click="addTag"></Tags>
 
-            <Tags @click="addTag"></Tags>
-            
-            <div class="tag" v-for="(item,index) in incomeTags"
+          <div
+            class="tag"
+            v-for="(item, index) in incomeTags"
             :key="index"
-            @click="tagSelect(item.id, item.kind)">
-              <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
-                {{ item.sign }}
-              </div>
-              <div class="name">
-                {{ item.name }}
-              </div>
+            @click="tagSelect(item.id, item.kind)"
+          >
+            <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
+              {{ item.sign }}
             </div>
-          </Tab>
-        </Tabs>
-      </div>
+            <div class="name">
+              {{ item.name }}
+            </div>
+          </div>
+        </Tab>
+      </Tabs>
+    </div>
 
-      <div class="inputPad_wrapper">
-        <InputPad @send-date-and-time="onSendDateAndTime"></InputPad>
-      </div>
+    <div class="inputPad_wrapper">
+      <InputPad @send-date-and-time="onSendDateAndTime"></InputPad>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import NavBar from '../../shared/NavBar.vue';
-import Tabs from '../../shared/Tabs.vue'
-import Tab from '../../shared/Tab.vue'
-import {computed, onMounted, reactive, ref} from 'vue'
-import InputPad from './InputPad.vue';
-import Tags from './Tags.vue';
-import yierRequest1, { yierRequest2 } from '../../service';
-import { useRoute, useRouter } from 'vue-router';
-import { number } from 'echarts';
+import NavBar from "../../shared/NavBar.vue";
+import Tabs from "../../shared/Tabs.vue";
+import Tab from "../../shared/Tab.vue";
+import { computed, onMounted, reactive, ref } from "vue";
+import InputPad from "./InputPad.vue";
+import Tags from "./Tags.vue";
+import yierRequest1, { yierRequest2 } from "../../service";
+import { useRoute, useRouter } from "vue-router";
+import { number } from "echarts";
 
-let tabKind = ref('支出')
+let tabKind = ref("支出");
 // 监听tab切换
-const onUpdateSelected = (title: string) => tabKind.value = title
+const onUpdateSelected = (title: string) => (tabKind.value = title);
 
-const route = useRoute()
-const router = useRouter()
+const route = useRoute();
+const router = useRouter();
 
-const expensesTags = ref<Tag[]>([])
-const incomeTags = ref<Tag[]>([])
+const expensesTags = ref<Tag[]>([]);
+const incomeTags = ref<Tag[]>([]);
 const accountingData = reactive<accountingData>({
-  kind: 'expenses',
+  kind: "expenses",
   amount: 0,
-  happened_at: '',
+  happened_at: "",
   tag_ids: [],
-})
+});
 const newTagKind = computed(() => {
-  return tabKind.value === '支出' ? 'expenses' : 'income'
-})
+  return tabKind.value === "支出" ? "expenses" : "income";
+});
 const exit = () => {
-  router.push('/items/list')
-}
+  router.push("/items/list");
+};
 
-onMounted(async() => {
-  await yierRequest1.get({
-    url: '/api/v1/tags',
-    params: {
-      kind: 'expenses'
-    }
-  }).then(res => {
-    expensesTags.value = res.resources
-  },
-  err => {
-    console.log(err,'tag expenses list err')
-  })
+onMounted(async () => {
+  await yierRequest1
+    .get({
+      url: "/api/v1/tags",
+      params: {
+        kind: "expenses",
+      },
+    })
+    .then(
+      (res) => {
+        expensesTags.value = res.resources;
+      },
+      (err) => {
+        console.log(err, "tag expenses list err");
+      }
+    );
 
-  await yierRequest1.get({
-    url: '/api/v1/tags',
-    params: {
-      kind: 'income'
-    }
-  }).then(res => {
-    incomeTags.value = res.resources
-  },
-  err => {
-    console.log(err,'tag income list err')
-  })
-})
+  await yierRequest1
+    .get({
+      url: "/api/v1/tags",
+      params: {
+        kind: "income",
+      },
+    })
+    .then(
+      (res) => {
+        incomeTags.value = res.resources;
+      },
+      (err) => {
+        console.log(err, "tag income list err");
+      }
+    );
+});
 
 const addTag = () => {
-  const return_to = route.path
-  if(return_to){
-    router.push('/tags/create?' + 'kind=' + newTagKind.value + '&&return_to=' + return_to)
-  }else{
-    router.push('/tags/create')
+  const return_to = route.path;
+  if (return_to) {
+    router.push(
+      "/tags/create?" + "kind=" + newTagKind.value + "&&return_to=" + return_to
+    );
+  } else {
+    router.push("/tags/create");
   }
-}
+};
 
-const selectedId = ref<number>()
-const tagSelect = (id: number,kind: string) => {
-  selectedId.value = id
-  accountingData.tag_ids[0] = id
-  accountingData.kind = kind
-  console.log(accountingData,'accountingData');
-}
+const selectedId = ref<number>();
+const tagSelect = (id: number, kind: string) => {
+  selectedId.value = id;
+  accountingData.tag_ids[0] = id;
+  accountingData.kind = kind;
+  console.log(accountingData, "accountingData");
+};
 
- async function onSendDateAndTime(date: string,amount:number) {
-  accountingData.amount = amount
-  accountingData.happened_at = date
-  await yierRequest2.post({
-    url: '/api/v1/items',
-    data: {
-      kind: accountingData.kind,
-      happened_at: accountingData.happened_at,
-      amount: accountingData.amount,
-      tag_ids: accountingData.tag_ids
-    }
-  }).then(() => {
-    router.push('/items')
-  }).catch((err) => {
-    console.log(err,'create error')
-    console.log(accountingData)
-  })
+async function onSendDateAndTime(date: string, amount: number) {
+  accountingData.amount = amount;
+  accountingData.happened_at = date;
+  await yierRequest2
+    .post({
+      url: "/api/v1/items",
+      data: {
+        kind: accountingData.kind,
+        happened_at: accountingData.happened_at,
+        amount: accountingData.amount,
+        tag_ids: accountingData.tag_ids,
+      },
+    })
+    .then(() => {
+      router.push("/items");
+    })
+    .catch((err) => {
+      console.log(err, "create error");
+      console.log(accountingData);
+    });
 }
 </script>
 
 <style lang="scss" scoped>
-  .content {
+.content {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 330px);
@@ -158,8 +186,8 @@ const tagSelect = (id: number,kind: string) => {
   overflow: auto; /* 滚动条不显示 */
 }
 .tabs::-webkit-scrollbar {
-    display: none;
-  }
+  display: none;
+}
 .inputPad_wrapper {
   flex-grow: 0;
   flex-shrink: 0;

@@ -2,7 +2,7 @@
   <div class="TagCreate">
     <NavBar class="NavBar">
       <template #icon>
-        <svgIcon name="exit" color="white" width="26px" height="26px"/>
+        <svgIcon name="exit" color="white" width="26px" height="26px" />
       </template>
       <template #title>
         <span>新建标签</span>
@@ -13,9 +13,8 @@
 </template>
 
 <script lang="ts" setup>
-import TagForm from './TagForm.vue';
-import NavBar from '../../shared/NavBar.vue';
-
+import TagForm from "./TagForm.vue";
+import NavBar from "../../shared/NavBar.vue";
 </script>
 
 <style lang="scss" scoped>
@@ -27,5 +26,4 @@ import NavBar from '../../shared/NavBar.vue';
     z-index: 1;
   }
 }
-  
 </style>

@@ -5,15 +5,11 @@
 </template>
 
 <script lang="ts" setup>
-
 defineProps({
-    title: {
-        type: String
-    }
-})
-  
+  title: {
+    type: String,
+  },
+});
 </script>
 
-<style scoped>
-  
-</style>
+<style scoped></style>

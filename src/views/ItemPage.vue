@@ -1,14 +1,11 @@
 <template>
   <div class="ItemPage">
-      <RouterView></RouterView>
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script setup>
-import NavBar from '../shared/NavBar.vue';
-  
+import NavBar from "../shared/NavBar.vue";
 </script>
 
-<style scoped>
-  
-</style>
+<style scoped></style>
