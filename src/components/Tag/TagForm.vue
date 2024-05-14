@@ -41,51 +41,107 @@
     </div>
   </template>
   
-  <script lang="ts" setup>
-  import Button from '../../shared/Button.vue'
-  import { reactive } from 'vue';
-  import EmojiSelect from '../../shared/EmojiSelect.vue'
-  import { validate,Rules } from '../../shared/Validate';
-  
-  
-  const formData = reactive({
-    name: '',
-    sign: '',
-  });
-  
-  // const errors = reactive<{[key in keyof FormData]?: string[] }>({});
-  const errors = reactive({
-    name: [],
-    sign: []
+<script lang="ts" setup>
+import Button from '../../shared/Button.vue'
+import { onMounted, reactive } from 'vue';
+import EmojiSelect from '../../shared/EmojiSelect.vue'
+import { validate,Rules } from '../../shared/Validate';
+import yierRequest1, { yierRequest2 } from '../../service';
+import { useRoute } from 'vue-router';
+import router from '../../router';
+
+const props = defineProps({
+  id: Number
+})
+onMounted(async () => {
+  if (props.id) {
+    await yierRequest1
+      .get({
+        url: `/api/v1/tags/${props.id}`
+      })
+      .then((res) => {
+        formData.id = res.resource.id
+        formData.name = res.resource.name
+        formData.sign = res.resource.sign
+      })
+  }
+})
+
+const route = useRoute()
+// const tagKind = route.query.kind || 'expenses'
+const formData = reactive<Partial<Tag>>({
+  id: undefined,
+  name: '',
+  sign: '',
+  kind: route.query.kind as 'income' | 'expenses' | undefined
+})
+// const errors = reactive<{ [k in keyof typeof formData]?: string[] }>({})
+const errors = reactive({
+  name: [],
+  sign: []
+})
+
+function hasErrors(errors: { [x: string]: string | any[] }) {
+  for (const key in errors) {
+    if (errors[key]?.length) {
+      return true
+    }
+  }
+  return false
+}
+
+const onSubmit = async (e: Event) => {
+  e.preventDefault()
+  const rules: Rules<typeof formData> = [
+    { key: 'name', type: 'required', message: '必填' },
+    { key: 'name', type: 'pattern', regex: /^.{2,4}$/, message: '只能填 2 到 4 个字符' },
+    { key: 'sign', type: 'required', message: '必选' }
+  ]
+  // 校验前先清空
+  Object.assign(errors, {
+    name: undefined,
+    sign: undefined
   })
-  
-  const onSubmit = (e: Event) => {
-    e.preventDefault();
-    // 防止页面在点击事件之后表单提交
-  
-    // console.log(formData);
-    // 该对象太复杂，需要用到Vue的Api来获取原始对象
-    // console.log(toRaw(formData));
-  
-    const rules: Rules<typeof formData> = [
-      { key: 'name', type:"required", message: '必填' },
-      { key: 'name', type: 'pattern', regex: /^.{2,4}$/, message: '长度在 2 到 4 个字符' },
-      { key: 'sign', type: 'required', message: '必填' }
-    ]
-    // 声明验证规则
-    Object.assign(errors,{
-      name: [],
-      sign: []
-    })
-    Object.assign(errors, validate(formData, rules));
-    
-    // errors = {
-    //   name: ['错误1', '错误2'],
-    //   sign: ['错误1', '错误2']
-    // } 错误类型
-    
-  };
-    
+  Object.assign(errors, validate(formData, rules))
+  if (!hasErrors(errors)) {
+    if (formData.id) {
+      // id有值，为标签更改操作
+      await yierRequest2
+        .patch({
+          url: `/api/v1/tags/${formData.id}`,
+          data: formData
+        })
+        .then(() => {
+          router.back()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    } else {
+      // id无值 标签新建操作
+      await yierRequest2
+        .post({
+          url: '/api/v1/tags',
+          data: {
+            kind: formData.kind,
+            name: formData.name,
+            sign: formData.sign
+          }
+        })
+        .then(() => {
+          router.push('/items/create')
+        })
+        .catch((err) => {
+          console.log(err)
+          console.log(formData);
+          
+        })
+    }
+  } else {
+    console.log('you err')
+    console.log(errors)
+  }
+}
   </script>
   
   <style lang="scss" scoped>

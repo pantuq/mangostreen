@@ -12,9 +12,11 @@
       <div class="content">
         <Tabs class="tabs" :selected="tabKind" @update-selected='onUpdateSelected'>
           <Tab title="支出" class="tags_wrapper">
-            <Tags></Tags>
+            <Tags @click="addTag"></Tags>
 
-            <div class="tag selected" v-for="item in expensesTags">
+            <div class="tag selected" v-for="(item,index) in expensesTags"
+            :key="index"
+            @click="tagSelect(item.id, item.kind)">
               <div class="sign">
                 {{ item.sign }}
               </div>
@@ -26,9 +28,11 @@
 
           <Tab title="收入" class="tags_wrapper">
 
-            <Tags></Tags>
+            <Tags @click="addTag"></Tags>
             
-            <div class="tag selected" v-for="item in incomeTags">
+            <div class="tag selected" v-for="(item,index) in incomeTags"
+            :key="index"
+            @click="tagSelect(item.id, item.kind)">
               <div class="sign">
                 {{ item.sign }}
               </div>
@@ -50,66 +54,89 @@
 import NavBar from '../../shared/NavBar.vue';
 import Tabs from '../../shared/Tabs.vue'
 import Tab from '../../shared/Tab.vue'
-import {ref} from 'vue'
+import {computed, onMounted, reactive, ref} from 'vue'
 import InputPad from './InputPad.vue';
 import Tags from './Tags.vue';
+import yierRequest1, { yierRequest2 } from '../../service';
+import { useRoute, useRouter } from 'vue-router';
 
 let tabKind = ref('支出')
 // 监听tab切换
 const onUpdateSelected = (title: string) => tabKind.value = title
 
+const route = useRoute()
+const router = useRouter()
 
-const expensesTags = ref([
-  { id: 1, name: '餐费', sign: '￥', category: 'expenses' },
-  { id: 2, name: '打车', sign: '￥', category: 'expenses' },
-  { id: 3, name: '聚餐', sign: '￥', category: 'expenses' },
-  { id: 4, name: '打车', sign: '￥', category: 'expenses' },
-  { id: 5, name: '聚餐', sign: '￥', category: 'expenses' },
-  { id: 6, name: '打车', sign: '￥', category: 'expenses' },
-  { id: 7, name: '聚餐', sign: '￥', category: 'expenses' },
-])
+const expensesTags = ref<Tag[]>([])
+const incomeTags = ref<Tag[]>([])
+const accountingData = reactive<accountingData>({
+  kind: 'expenses',
+  amount: '',
+  happened_at: [],
+  tag_ids: [],
+})
+const newTagKind = computed(() => {
+  return tabKind.value === '支出' ? 'expenses' : 'income'
+})
 
-const incomeTags = ref([
-  { id: 4, name: '工资', sign: '￥', category: 'income' },
-  { id: 5, name: '彩票', sign: '￥', category: 'income' },
-  { id: 6, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 11, name: '彩票', sign: '￥', category: 'income' },
-  { id: 18, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 17, name: '彩票', sign: '￥', category: 'income' },
-  { id: 19, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 4, name: '工资', sign: '￥', category: 'income' },
-  { id: 5, name: '彩票', sign: '￥', category: 'income' },
-  { id: 6, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 11, name: '彩票', sign: '￥', category: 'income' },
-  { id: 18, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 17, name: '彩票', sign: '￥', category: 'income' },
-  { id: 19, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 4, name: '工资', sign: '￥', category: 'income' },
-  { id: 5, name: '彩票', sign: '￥', category: 'income' },
-  { id: 6, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 11, name: '彩票', sign: '￥', category: 'income' },
-  { id: 18, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 17, name: '彩票', sign: '￥', category: 'income' },
-  { id: 19, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 4, name: '工资', sign: '￥', category: 'income' },
-  { id: 5, name: '彩票', sign: '￥', category: 'income' },
-  { id: 6, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 11, name: '彩票', sign: '￥', category: 'income' },
-  { id: 18, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 17, name: '彩票', sign: '￥', category: 'income' },
-  { id: 19, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 4, name: '工资', sign: '￥', category: 'income' },
-  { id: 5, name: '彩票', sign: '￥', category: 'income' },
-  { id: 6, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 11, name: '彩票', sign: '￥', category: 'income' },
-  { id: 18, name: '滴滴', sign: '￥', category: 'income' },
-  { id: 17, name: '彩票', sign: '￥', category: 'income' },
-  { id: 19, name: '滴滴', sign: '￥', category: 'income' },
-])
+onMounted(async() => {
+  await yierRequest1.get({
+    url: '/api/v1/tags',
+    params: {
+      kind: 'expenses'
+    }
+  }).then(res => {
+    expensesTags.value = res.data
+  },
+  err => {
+    console.log(err,'tag expenses list err')
+  })
 
-const onSendDateAndTime = (date: number[],amount:string) => {
-  console.log(date)
-  console.log(amount);
+  await yierRequest1.get({
+    url: '/api/v1/tags',
+    params: {
+      kind: 'income'
+    }
+  }).then(res => {
+    incomeTags.value = res.data
+  },
+  err => {
+    console.log(err,'tag income list err')
+  })
+})
+
+const addTag = () => {
+  const return_to = route.path
+  if(return_to){
+    router.push('/tags/create?' + 'kind=' + newTagKind.value + '&&return_to=' + return_to)
+  }else{
+    router.push('/tags/create')
+  }
+}
+
+const selectedId = ref<number>()
+const tagSelect = (id: number,kind: string) => {
+  selectedId.value = id
+  accountingData.tag_ids[0] = id
+  accountingData.kind = kind
+}
+
+ async function onSendDateAndTime(date: number[],amount:string) {
+  accountingData.amount = amount
+  accountingData.happened_at = date
+  await yierRequest2.post({
+    url: '/api/v1/items',
+    data: {
+      kind: accountingData.kind,
+      happened_at: accountingData.happened_at,
+      amount: accountingData.amount,
+      tag_ids: accountingData.tag_ids
+    }
+  }).then((res) => {
+    console.log(res)
+  }).catch((err) => {
+    console.log(err,'create error')
+  })
 }
 </script>
 
