@@ -86,7 +86,7 @@ onMounted(async() => {
       kind: 'expenses'
     }
   }).then(res => {
-    expensesTags.value = res.data
+    expensesTags.value = res.resources
   },
   err => {
     console.log(err,'tag expenses list err')
@@ -98,7 +98,7 @@ onMounted(async() => {
       kind: 'income'
     }
   }).then(res => {
-    incomeTags.value = res.data
+    incomeTags.value = res.resources
   },
   err => {
     console.log(err,'tag income list err')
