@@ -15,7 +15,7 @@
         :selected="tabKind"
         @update-selected="onUpdateSelected"
       >
-        <Tab title="支出" class="tags_wrapper">
+        <Tab title="支出" class="tags_wrapper" @touchmove="OnTouchMove">
           <Tags @click="addTag"></Tags>
 
           <div
@@ -23,6 +23,8 @@
             v-for="(item, index) in expensesTags"
             :key="index"
             @click="tagSelect(item.id, item.kind)"
+            @touchstart="OnTouchStart"
+            @touchend="OnTouchEnd"
           >
             <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
               {{ item.sign }}
@@ -166,6 +168,30 @@ async function onSendDateAndTime(date: string, amount: number) {
       console.log(err, "create error");
       console.log(accountingData);
     });
+}
+
+// 长按tag进行编辑
+let timer: number | undefined = undefined 
+let currentTag: HTMLDivElement | undefined = undefined
+const OnLongPress = () => {
+  console.log("long press");
+}
+const OnTouchStart = (e: TouchEvent) => {
+  currentTag = e.currentTarget as HTMLDivElement
+  timer = setTimeout(() => {
+  OnLongPress()
+  }, 1000);
+}
+const OnTouchEnd = (e: TouchEvent) => {
+  clearTimeout(timer)
+}
+const OnTouchMove = (e: TouchEvent) => {
+  const x = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) as HTMLDivElement
+  if(currentTag?.contains(x) || currentTag === x){
+
+  }else{
+    clearTimeout(timer)
+  }
 }
 </script>
 
