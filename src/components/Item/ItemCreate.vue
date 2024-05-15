@@ -23,7 +23,7 @@
             v-for="(item, index) in expensesTags"
             :key="index"
             @click="tagSelect(item.id, item.kind)"
-            @touchstart="OnTouchStart"
+            @touchstart="OnTouchStart($event, item)"
             @touchend="OnTouchEnd"
           >
             <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
@@ -145,7 +145,7 @@ const tagSelect = (id: number, kind: string) => {
   selectedId.value = id;
   accountingData.tag_ids[0] = id;
   accountingData.kind = kind;
-  console.log(accountingData, "accountingData");
+  // console.log(accountingData, "accountingData");
 };
 
 async function onSendDateAndTime(date: string, amount: number) {
@@ -173,23 +173,25 @@ async function onSendDateAndTime(date: string, amount: number) {
 // 长按tag进行编辑
 let timer: number | undefined = undefined 
 let currentTag: HTMLDivElement | undefined = undefined
-const OnLongPress = () => {
-  console.log("long press");
+const OnLongPress = (tag: Tag) => {
+  router.push(`/tags/${tag.id}/edit?kind=${tag.kind}&return_to=${router.currentRoute.value.fullPath}`);
 }
-const OnTouchStart = (e: TouchEvent) => {
+const OnTouchStart = (e: TouchEvent,tag: Tag) => {
   currentTag = e.currentTarget as HTMLDivElement
   timer = setTimeout(() => {
-  OnLongPress()
+  OnLongPress(tag)
+  
   }, 1000);
 }
 const OnTouchEnd = (e: TouchEvent) => {
   clearTimeout(timer)
 }
 const OnTouchMove = (e: TouchEvent) => {
-  const x = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) as HTMLDivElement
-  if(currentTag?.contains(x) || currentTag === x){
-
+  // 防止拖拽长按
+  const pointedElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) as HTMLDivElement
+  if(currentTag?.contains(pointedElement) || currentTag === pointedElement){
   }else{
+    // 既不是当前tag，又不在当前tag里面
     clearTimeout(timer)
   }
 }
