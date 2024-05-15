@@ -70,7 +70,6 @@ import InputPad from "./InputPad.vue";
 import Tags from "./Tags.vue";
 import yierRequest1, { yierRequest2 } from "../../service";
 import { useRoute, useRouter } from "vue-router";
-import { number } from "echarts";
 import BackIcon from "../../shared/BackIcon.vue";
 
 let tabKind = ref("支出");
@@ -91,10 +90,6 @@ const accountingData = reactive<accountingData>({
 const newTagKind = computed(() => {
   return tabKind.value === "支出" ? "expenses" : "income";
 });
-const exit = () => {
-  router.push("/items/list");
-};
-
 onMounted(async () => {
   await yierRequest1
     .get({

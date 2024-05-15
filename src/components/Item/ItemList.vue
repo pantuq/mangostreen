@@ -144,8 +144,6 @@ const hideMenu = () => {
 </script>
 
 <style lang="scss" scoped>
-.ItemList {
-}
 .overlay {
   display: flex;
   justify-content: center;
