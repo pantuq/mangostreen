@@ -5,10 +5,12 @@
         <BackIcon></BackIcon>
       </template>
       <template #title>
-        <span>新建标签</span>
+        <span>编辑标签</span>
       </template>
     </NavBar>
-    <TagForm></TagForm>
+
+    <TagForm :id="numberId"></TagForm>
+    
     <div class="button-group">
       <Button level="danger" class="removeTags">删除标签</Button>
       <Button level="danger" class="removeItemsAndTags">删除记账和标签</Button>
@@ -21,6 +23,10 @@ import TagForm from "./TagForm.vue";
 import NavBar from "../../shared/NavBar.vue";
 import Button from "../../shared/Button.vue";
 import BackIcon from "../../shared/BackIcon.vue";
+import { useRoute } from "vue-router";
+
+const route = useRoute();
+const numberId = Number(route.params.id);
 </script>
 
 <style lang="scss" scoped>

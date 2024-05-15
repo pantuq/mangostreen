@@ -60,6 +60,7 @@ import router from "../../router";
 
 const props = defineProps({
   id: Number,
+  // 传入id，判断是编辑tag还是新增tag
 });
 onMounted(async () => {
   if (props.id) {
