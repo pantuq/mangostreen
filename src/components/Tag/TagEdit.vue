@@ -10,10 +10,17 @@
     </NavBar>
 
     <TagForm :id="numberId"></TagForm>
-    
+
     <div class="button-group">
-      <Button level="danger" class="removeTags">删除标签</Button>
-      <Button level="danger" class="removeItemsAndTags">删除记账和标签</Button>
+      <Button @click="DeleteTag()" level="danger" class="removeTags"
+        >删除标签</Button
+      >
+      <Button
+        @click="DeleteTag({ withRecords: true })"
+        level="danger"
+        class="removeItemsAndTags"
+        >删除记账和标签</Button
+      >
     </div>
   </div>
 </template>
@@ -23,10 +30,37 @@ import TagForm from "./TagForm.vue";
 import NavBar from "../../shared/NavBar.vue";
 import Button from "../../shared/Button.vue";
 import BackIcon from "../../shared/BackIcon.vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { yierRequest2 } from "../../service";
+import { showConfirmDialog, showToast } from "vant";
 
 const route = useRoute();
+const router = useRouter();
 const numberId = Number(route.params.id);
+
+const DeleteTag = (option?: { withRecords: boolean }) => {
+  showConfirmDialog({
+    title: "确认删除",
+    message: "删除后无法恢复，确认删除？",
+    width: "80%",
+    confirmButtonColor: "var(--main)",
+  })
+  .then(async () => {
+    await yierRequest2
+      .delete({
+        url: `api/v1/tags/${numberId}`,
+      })
+      .then(() => {
+        showToast({ message: "删除成功", duration: 300 });
+        router.back();
+      })
+      .catch((err) => {
+        showToast({ message: "删除失败", duration: 300 });
+        console.log(err);
+      });
+  })
+  .catch(() => {});
+};
 </script>
 
 <style lang="scss" scoped>

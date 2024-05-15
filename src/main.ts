@@ -6,6 +6,9 @@ import "./assets/stylesheets/reset.scss";
 import "./assets/stylesheets/var.scss";
 import "virtual:svg-icons-register";
 import globalComponent from "./shared/index";
+// 引入vant组件样式
+import 'vant/lib/index.css';
+
 
 const app = createApp(App);
 app.use(router);
