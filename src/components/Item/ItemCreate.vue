@@ -171,30 +171,34 @@ async function onSendDateAndTime(date: string, amount: number) {
 }
 
 // 长按tag进行编辑
-let timer: number | undefined = undefined 
-let currentTag: HTMLDivElement | undefined = undefined
+let timer: number | undefined = undefined;
+let currentTag: HTMLDivElement | undefined = undefined;
 const OnLongPress = (tag: Tag) => {
-  router.push(`/tags/${tag.id}/edit?kind=${tag.kind}&return_to=${router.currentRoute.value.fullPath}`);
-}
-const OnTouchStart = (e: TouchEvent,tag: Tag) => {
-  currentTag = e.currentTarget as HTMLDivElement
+  router.push(
+    `/tags/${tag.id}/edit?kind=${tag.kind}&return_to=${router.currentRoute.value.fullPath}`
+  );
+};
+const OnTouchStart = (e: TouchEvent, tag: Tag) => {
+  currentTag = e.currentTarget as HTMLDivElement;
   timer = setTimeout(() => {
-  OnLongPress(tag)
-  
+    OnLongPress(tag);
   }, 1000);
-}
+};
 const OnTouchEnd = (e: TouchEvent) => {
-  clearTimeout(timer)
-}
+  clearTimeout(timer);
+};
 const OnTouchMove = (e: TouchEvent) => {
   // 防止拖拽长按
-  const pointedElement = document.elementFromPoint(e.touches[0].clientX, e.touches[0].clientY) as HTMLDivElement
-  if(currentTag?.contains(pointedElement) || currentTag === pointedElement){
-  }else{
+  const pointedElement = document.elementFromPoint(
+    e.touches[0].clientX,
+    e.touches[0].clientY
+  ) as HTMLDivElement;
+  if (currentTag?.contains(pointedElement) || currentTag === pointedElement) {
+  } else {
     // 既不是当前tag，又不在当前tag里面
-    clearTimeout(timer)
+    clearTimeout(timer);
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
