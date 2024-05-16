@@ -17,7 +17,11 @@
     </ul>
     <!-- item -->
     <ol class="list">
-      <li v-for="item in items" :key="item.id">
+      <li v-for="item in items" 
+      :key="item.id"
+      @touchstart="OnTouchStart($event,item)"
+      @touchend="OnTouchEnd"
+      @touchmove="OnTouchMove">
         <div class="sign">
           <span>{{ item?.tags?.[0].sign }}</span>
         </div>
@@ -51,6 +55,7 @@ import router from "../../router";
 import yierRequest1, { yierRequest2 } from "../../service";
 import { transformString }from "../../shared/Time";
 import handleAmount from "../../shared/handleAmount";
+import { showConfirmDialog, showToast } from "vant";
 
 const props = defineProps({
   startDate: {
@@ -158,6 +163,49 @@ const fetchTotal = async() => {
   })
 }
 onMounted(fetchTotal)
+
+// 长按删除
+let timer: number | undefined = undefined
+let currentItem: HTMLDivElement | undefined = undefined
+// 确定在item上面长按
+const LongPress = (id:number) => {
+  showConfirmDialog({
+    title: '确认删除该账目吗?',
+    width: "80%",
+    confirmButtonColor: "var(--main)",
+  }).then(async () => {
+    await yierRequest2.delete({
+      url: `/api/v1/items/${id}`
+    }).then(() => {
+      fetchItem()
+      fetchTotal()
+      showToast({ message: '删除成功' })
+    }).catch(() => {
+      showToast({ message: '删除失败' })
+    })
+  })
+}
+const OnTouchStart = (event: TouchEvent, item: Item) => {
+  currentItem = event.currentTarget as HTMLDivElement;
+  timer = setTimeout(() => {
+    LongPress(item.id)
+  }, 1000)
+}
+const OnTouchEnd = () => {
+  clearTimeout(timer)
+}
+const OnTouchMove = (e: TouchEvent) => {
+  // 防止拖拽长按，谢绝移动到其他item上面
+  const pointedElement = document.elementFromPoint(
+    e.touches[0].clientX,
+    e.touches[0].clientY
+  ) as HTMLDivElement;
+  if(currentItem?.contains(pointedElement) || currentItem === pointedElement){
+  }else{
+    // 既不是当前item，也不是当前item的子元素，清除定时器
+    clearTimeout(timer)
+  }
+}
 </script>
 
 <style lang="scss" scoped>
