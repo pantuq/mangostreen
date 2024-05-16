@@ -18,7 +18,7 @@
     <ol class="list">
       <li v-for="item in items" :key="item.id">
         <div class="sign">
-          <span></span>
+          <span>{{ item?.tags?.[0].sign }}</span>
         </div>
         <div class="text">
           <div class="tagAndAmount">
