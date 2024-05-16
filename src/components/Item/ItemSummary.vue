@@ -183,7 +183,7 @@ const LongPress = (id:number) => {
     }).catch(() => {
       showToast({ message: '删除失败' })
     })
-  })
+  }).catch(() => {})
 }
 const OnTouchStart = (event: TouchEvent, item: Item) => {
   currentItem = event.currentTarget as HTMLDivElement;
