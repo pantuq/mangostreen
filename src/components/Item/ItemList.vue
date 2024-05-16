@@ -17,26 +17,26 @@
     <Tabs :selected="tabKind" @update-selected="onUpdateSelected">
       <Tab title="本月">
         <ItemSummary
-          :startDate="timeList[0].start.FormData()"
-          :endDate="timeList[0].end.FormData()"
+          :startDate="timeList[0].start.Formt()"
+          :endDate="timeList[0].end.Formt()"
         />
       </Tab>
       <Tab title="上月">
         <ItemSummary
-          :startDate="timeList[1].start.FormData()"
-          :endDate="timeList[1].end.FormData()"
+          :startDate="timeList[1].start.Formt()"
+          :endDate="timeList[1].end.Formt()"
         />
       </Tab>
       <Tab title="今年">
         <ItemSummary
-          :startDate="timeList[2].start.FormData()"
-          :endDate="timeList[2].end.FormData()"
+          :startDate="timeList[2].start.Formt()"
+          :endDate="timeList[2].end.Formt()"
         />
       </Tab>
       <Tab title="自定义时间">
         <ItemSummary
-          :startDate="customTime.start.FormData()"
-          :endDate="customTime.end.FormData()"
+          :startDate="customTime.start"
+          :endDate="customTime.end"
         />
       </Tab>
     </Tabs>
@@ -64,6 +64,7 @@
       </div>
     </van-overlay>
     <OverLay v-show="menuVisible" @close-mask="hideMenu" />
+    <FloatButton @click="startAccounting"></FloatButton>
   </div>
 </template>
 
@@ -77,6 +78,9 @@ import { Time } from "../../shared/Time";
 import OverLay from "../../shared/OverLay.vue";
 import StartFormItem from "./StartFormItem.vue";
 import EndFormItem from "./EndFormItem.vue";
+import { yierRequest2 } from "../../service";
+import router from "../../router";
+import FloatButton from "../../shared/FloatButton.vue";
 
 const tabKind = ref("本月");
 const overlayVisible = ref(false);
@@ -86,7 +90,21 @@ const onUpdateSelected = (title: string) => {
   showOverlay();
 };
 
-const onSubmitCustomTime = (e: Event) => {
+const items = ref<Item[]>([])
+
+const onSubmitCustomTime = async(e: Event) => {
+  await yierRequest2.get({
+    url:"/api/v1/items",
+    params:{
+      page: 0,
+      happende_after: customTime.start,
+      happende_before: customTime.end
+    }
+  }).then(res=>{
+    items.value = res.resources
+  }).catch((err) => {
+    console.log(err)
+  })
   e.preventDefault();
 };
 
@@ -97,8 +115,8 @@ const protectContent = (e: Event) => {
 
 const time = new Time(new Date());
 const customTime = reactive({
-  start: new Time(),
-  end: new Time(),
+  start: new Time().Formt(),
+  end: new Time().Formt(),
 });
 const timeList = [
   {
@@ -128,10 +146,11 @@ const hideOverlay = () => {
 };
 
 const onStartDateChange = (startDate: any) => {
-  console.log(startDate);
+  customTime.start = startDate.join("-");
 };
 const onEndDateChange = (endDate: any) => {
-  console.log(endDate);
+  console.log("endDate", endDate);
+  customTime.end = endDate.join("-");
 };
 
 const menuVisible = ref(false);
@@ -141,6 +160,10 @@ const onClickMenu = () => {
 const hideMenu = () => {
   menuVisible.value = false;
 };
+
+const startAccounting = () => {
+  router.push('/items/create')
+}
 </script>
 
 <style lang="scss" scoped>
