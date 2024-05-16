@@ -133,3 +133,12 @@ export class Time {
     return new Time(date);
   }
 }
+
+export function transformString(str: string){
+  const date = new Date(str);
+  const strlist = []
+  strlist.push(date.getFullYear())
+  strlist.push(date.getMonth()+1)
+  strlist.push(date.getDate())
+  return strlist.join('-')
+}

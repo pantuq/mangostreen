@@ -22,10 +22,10 @@
         </div>
         <div class="text">
           <div class="tagAndAmount">
-            <div class="tag">旅行</div>
+            <div class="tag">{{ item?.tags?.[0].name }}</div>
             <div class="amount">￥1234</div>
           </div>
-          <div class="time">2019-01-01</div>
+          <div class="time">{{ transformString(item.happened_at) }}</div>
         </div>
       </li>
     </ol>
@@ -45,6 +45,7 @@ import { PropType, onMounted, ref } from "vue";
 import FloatButton from "../../shared/FloatButton.vue";
 import router from "../../router";
 import yierRequest1 from "../../service";
+import { transformString }from "../../shared/Time";
 
 const props = defineProps({
   startDate: {
