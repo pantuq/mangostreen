@@ -179,7 +179,7 @@ const OnTouchStart = (e: TouchEvent, tag: Tag) => {
     OnLongPress(tag);
   }, 1000);
 };
-const OnTouchEnd = (e: TouchEvent) => {
+const OnTouchEnd = () => {
   clearTimeout(timer);
 };
 const OnTouchMove = (e: TouchEvent) => {
