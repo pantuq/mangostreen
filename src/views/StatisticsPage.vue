@@ -12,26 +12,26 @@
     <Tabs :selected="tabKind" @update-selected="onUpdateSelected">
       <Tab title="本月">
         <Charts
-          :startDate="timeList[0].start.FormData()"
-          :endDate="timeList[0].end.FormData()"
+          :startDate="timeList[0].start.Formt()"
+          :endDate="timeList[0].end.Formt()"
         ></Charts>
       </Tab>
       <Tab title="上月">
         <Charts
-          :startDate="timeList[1].start.FormData()"
-          :endDate="timeList[1].end.FormData()"
+          :startDate="timeList[1].start.Formt()"
+          :endDate="timeList[1].end.Formt()"
         ></Charts>
       </Tab>
       <Tab title="今年">
         <Charts
-          :startDate="timeList[2].start.FormData()"
-          :endDate="timeList[2].end.FormData()"
+          :startDate="timeList[2].start.Formt()"
+          :endDate="timeList[2].end.Formt()"
         ></Charts>
       </Tab>
       <Tab title="自定义时间">
         <Charts
-          :startDate="customTime.start.FormData()"
-          :endDate="customTime.end.FormData()"
+          :startDate="customTime.start"
+          :endDate="customTime.end"
         ></Charts>
       </Tab>
     </Tabs>
@@ -81,8 +81,8 @@ const onUpdateSelected = (title: string) => {
 
 const time = new Time(new Date());
 const customTime = reactive({
-  start: new Time(),
-  end: new Time(),
+  start: new Time().Formt(),
+  end: new Time().Formt(),
 });
 const timeList = [
   {
