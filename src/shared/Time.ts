@@ -14,8 +14,14 @@
  */
 export class Time {
   date: Date;
-  constructor(date = new Date()) {
-    this.date = date;
+  constructor(date?: Date | string) {
+    if(date === undefined){
+      this.date = new Date();
+    }else if(typeof date === "string"){
+      this.date = new Date(date);
+    }else{
+      this.date = date;
+    }
   }
   Formt(pattern = "YYYY-MM-DD") {
     // 对时间进行格式化
