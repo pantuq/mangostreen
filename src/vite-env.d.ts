@@ -40,3 +40,9 @@ type accountingData = {
   amount: number;
   happened_at: string;
 };
+
+type LineData = {happened_at: string; amount: number;}
+type Line = LineData[]
+
+type PieData = { tag_id: number; amount: number; tag: Tag }
+type Pie = PieData[]
