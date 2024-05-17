@@ -1,14 +1,14 @@
 <template>
   <div class="BarChart">
     <div class="demo3">
-      <div class="topItem" v-for="(item, index) in betterData3" :key="index">
+      <div class="topItem" v-for="(item, index) in $props.data" :key="index">
         <div class="sign">
           {{ item.tag.sign }}
         </div>
         <div class="bar_wrapper">
           <div class="bar_text">
             <span>{{ item.tag.name }} - {{ item.percent }}</span>
-            <span>￥{{ item.amount }}</span>
+            <span>￥{{ handleAmount(item.amount) }}</span>
           </div>
           <div class="bar">
             <div class="bar_inner"></div>
@@ -20,21 +20,32 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, computed } from "vue";
+import { PropType } from 'vue';
+import handleAmount from '../../shared/handleAmount';
 
-const data3 = reactive([
-  { tag: { id: 1, name: "房租", sign: "x" }, amount: 3000 },
-  { tag: { id: 2, name: "吃饭", sign: "x" }, amount: 1000 },
-  { tag: { id: 3, name: "娱乐", sign: "x" }, amount: 900 },
-]);
-const betterData3 = computed(() => {
-  // 获得百分比
-  const total = data3.reduce((sum, item) => sum + item.amount, 0);
-  return data3.map((item) => ({
-    ...item,
-    percent: Math.round((item.amount / total) * 100) + "%",
-  }));
-});
+
+const props = defineProps({
+  data: {
+    type: Array as PropType<{tag: Tag; amount: number; percent: string;}[]>,
+    require: true
+  }
+})
+// import { reactive, computed } from "vue";
+
+
+// const data3 = reactive([
+//   { tag: { id: 1, name: "房租", sign: "x" }, amount: 3000 },
+//   { tag: { id: 2, name: "吃饭", sign: "x" }, amount: 1000 },
+//   { tag: { id: 3, name: "娱乐", sign: "x" }, amount: 900 },
+// ]);
+// const betterData3 = computed(() => {
+//   // 获得百分比
+//   const total = data3.reduce((sum, item) => sum + item.amount, 0);
+//   return data3.map((item) => ({
+//     ...item,
+//     percent: Math.round((item.amount / total) * 100) + "%",
+//   }));
+// });
 </script>
 
 <style lang="scss" scoped>
