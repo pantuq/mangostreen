@@ -70,6 +70,7 @@ import { reactive, ref } from "vue";
 import { Time } from "../shared/Time";
 import Charts from "../components/Statistics/Charts.vue";
 import BackIcon from "../shared/BackIcon.vue";
+import { yierRequest2 } from "../service";
 
 const tabKind = ref("本月");
 const overlayVisible = ref(false);
@@ -99,7 +100,21 @@ const timeList = [
   },
 ];
 
-const onSubmitCustomTime = (e: Event) => {
+const items = ref<Item[]>([])
+
+const onSubmitCustomTime = async(e: Event) => {
+  await yierRequest2.get({
+    url:"/api/v1/items",
+    params:{
+      page: 0,
+      happende_after: customTime.start,
+      happende_before: customTime.end
+    }
+  }).then(res=>{
+    items.value = res.resources
+  }).catch((err) => {
+    console.log(err)
+  })
   e.preventDefault();
 };
 
@@ -121,10 +136,10 @@ const hideOverlay = () => {
 };
 
 const onStartDateChange = (startDate: any) => {
-  console.log(startDate);
+  customTime.start = startDate.join("-");
 };
 const onEndDateChange = (endDate: any) => {
-  console.log(endDate);
+  customTime.end = endDate.join("-");
 };
 </script>
 
