@@ -1,7 +1,7 @@
 <template>
   <div class="action">
     <SkipFeature class="fake"></SkipFeature>
-    <RouterLink to="/start" @click="setSkip">下一页</RouterLink>
+    <RouterLink to="/items" @click="setSkip">下一页</RouterLink>
     <SkipFeature class="fake"></SkipFeature>
   </div>
 </template>

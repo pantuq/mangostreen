@@ -1,55 +1,75 @@
 <template>
   <div class="ItemSummary">
-    <!-- 总结 -->
-    <ul class="total" @click="showStatistics">
-      <li>
-        <span>收入</span>
-        <span>{{ handleAmount(totalExpenses) }}</span>
-      </li>
-      <li>
-        <span>支出</span>
-        <span>{{ handleAmount(totalIncome) }}</span>
-      </li>
-      <li>
-        <span>净收入</span>
-        <span>{{ handleAmount(totalIncome - totalExpenses) }}</span>
-      </li>
-    </ul>
-    <!-- item -->
-    <ol class="list">
-      <li
-        v-for="item in items"
-        :key="item.id"
-        @touchstart="OnTouchStart($event, item)"
-        @touchend="OnTouchEnd"
-        @touchmove="OnTouchMove"
-      >
-        <div class="sign">
-          <span>{{ item?.tags?.[0].sign }}</span>
-        </div>
-        <div class="text">
-          <div class="tagAndAmount">
-            <div class="tag">{{ item?.tags?.[0].name }}</div>
-            <span class="amount"
-              >{{ item.kind === "expenses" ? "-" : ""
-              }}{{ handleAmount(item.amount) }}</span
-            >
+    <div v-if="items.length > 0" class="Summary">
+      <!-- 总结 -->
+      <ul class="total" @click="showStatistics">
+        <li>
+          <span>收入</span>
+          <span>{{ handleAmount(totalExpenses) }}</span>
+        </li>
+        <li>
+          <span>支出</span>
+          <span>{{ handleAmount(totalIncome) }}</span>
+        </li>
+        <li>
+          <span>净收入</span>
+          <span>{{ handleAmount(totalIncome - totalExpenses) }}</span>
+        </li>
+      </ul>
+      <!-- item -->
+      <ol class="list">
+        <li
+          v-for="item in items"
+          :key="item.id"
+          @touchstart="OnTouchStart($event, item)"
+          @touchend="OnTouchEnd"
+          @touchmove="OnTouchMove"
+        >
+          <div class="sign">
+            <span>{{ item?.tags?.[0].sign }}</span>
           </div>
-          <div class="time">{{ transformString(item.happened_at) }}</div>
+          <div class="text">
+            <div class="tagAndAmount">
+              <div class="tag">{{ item?.tags?.[0].name }}</div>
+              <span class="amount"
+                >{{ item.kind === "expenses" ? "-" : ""
+                }}{{ handleAmount(item.amount) }}</span
+              >
+            </div>
+            <div class="time">{{ transformString(item.happened_at) }}</div>
+          </div>
+        </li>
+      </ol>
+      <!-- 加载数据 -->
+      <div class="aboutMore">
+        <div class="more" v-if="hasMore()">
+          <button @click="fetchMore">点击加载更多</button>
         </div>
-      </li>
-    </ol>
-    <!-- 加载数据 -->
-    <div class="aboutMore">
-      <div class="more" v-if="hasMore()">
-        <button @click="fetchMore">点击加载更多</button>
+        <div class="nomore" v-else>
+          <p>暂无更多数据</p>
+        </div>
       </div>
-      <div class="nomore" v-else>
-        <p>暂无更多数据</p>
-      </div>
+      <!-- 浮动按钮，添加item和tag -->
+      <FloatButton></FloatButton>
     </div>
-    <!-- 浮动按钮，添加item和tag -->
-    <FloatButton></FloatButton>
+
+    <div v-else class="start">
+      <div class="pig_wrapper">
+      <Center class="pig">
+        <svg style="width: 128px">
+               
+          <use xlink:href="#icon-pig" fill="red"></use>
+             
+        </svg>
+      </Center>
+    </div>
+
+    <RouterLink to="/items/create">
+      <div class="btn_wrapper">
+        <Button class="btn">开始记账</Button>
+      </div>
+    </RouterLink>
+    </div>
   </div>
 </template>
 
@@ -61,6 +81,8 @@ import yierRequest1, { yierRequest2 } from "../../service";
 import { transformString } from "../../shared/Time";
 import handleAmount from "../../shared/handleAmount";
 import { showConfirmDialog, showToast } from "vant";
+import Center from "../../shared/Center.vue";
+import Button from "../../shared/Button.vue";
 
 const props = defineProps({
   startDate: {
@@ -309,6 +331,20 @@ const OnTouchMove = (e: TouchEvent) => {
     }
     .nomore {
       color: #999;
+    }
+  }
+  .start {
+    .btn {
+      width: 100%;
+      &_wrapper {
+        padding: 16px;
+      }
+    }
+
+    .pig {
+      &_wrapper {
+        padding: 120px 0;
+      }
     }
   }
 }

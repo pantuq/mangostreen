@@ -1,6 +1,6 @@
 <template>
   <div class="SkipFeature">
-    <RouterLink to="/start" @click="setSkip">跳过</RouterLink>
+    <RouterLink to="/items" @click="setSkip">跳过</RouterLink>
   </div>
 </template>
 

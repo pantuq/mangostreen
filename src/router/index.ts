@@ -9,7 +9,6 @@ import WelcomeThreeAction from "../components/welcome/WelcomeAction/WelcomeThree
 import WelcomeThreeCard from "../components/welcome/WelcomeCard/WelcomeThreeCard.vue";
 import WelcomeFourAction from "../components/welcome/WelcomeAction/WelcomeFourAction.vue";
 import WelcomeFourCard from "../components/welcome/WelcomeCard/WelcomeFourCard.vue";
-import Start from "../views/Start.vue";
 import ItemPage from "../views/ItemPage.vue";
 import ItemList from "../components/Item/ItemList.vue";
 import ItemCreate from "../components/Item/ItemCreate.vue";
@@ -50,7 +49,6 @@ const router = createRouter({
         },
       ],
     },
-    { path: "/start", component: Start },
     {
       path: "/items",
       component: ItemPage,
@@ -77,7 +75,7 @@ router.beforeEach(async (to, from) => {
   if (
     to.path === "/" ||
     to.path.startsWith("/welcome") ||
-    to.path === "/start" ||
+    to.path === "/items" ||
     to.path === "/sign_in"
     // 路由守卫白名单
   ) {
