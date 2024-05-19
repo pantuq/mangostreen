@@ -18,6 +18,7 @@ import TagEdit from "../components/Tag/TagEdit.vue";
 import SignInPageVue from "../views/SignInPage.vue";
 import StatisticsPageVue from "../views/StatisticsPage.vue";
 import { refreshMe } from "../service/login/refreshMe";
+import ComingSoon from "../shared/ComingSoon.vue";
 
 const router = createRouter({
   history: createWebHistory(),
@@ -68,6 +69,8 @@ const router = createRouter({
     },
     { path: "/sign_in", component: SignInPageVue },
     { path: "/statistics", component: StatisticsPageVue },
+    { path: "/export", component: ComingSoon },
+    { path: "/notify", component: ComingSoon }
   ],
 });
 

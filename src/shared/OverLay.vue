@@ -8,10 +8,10 @@
           <p class="sign-in" @click="signOut">退出登录</p>
         </div>
         <div v-else>
-          <!-- <RouterLink to="/login"> -->
+          <RouterLink to="/sign_in">
             <h2 class="user-status">未登录用户</h2>
             <p class="sign-in">点击这里登录</p>
-          <!-- </RouterLink> -->
+          </RouterLink>
         </div>
       </section>
       <nav class="side-navbar">
@@ -23,16 +23,16 @@
             </RouterLink>
           </li>
           <li>
-            <!-- <RouterLink to="/export"> -->
+            <RouterLink to="/export">
               <svgIcon name="export" width="32px" height="32px"></svgIcon>
               <span>导出数据</span>
-            <!-- </RouterLink> -->
+            </RouterLink>
           </li>
           <li>
-            <!-- <RouterLink to="/notice"> -->
+            <RouterLink to="/notify">
               <svgIcon name="notice" width="32px" height="32px"></svgIcon>
               <span>记账提醒</span>
-            <!-- </RouterLink> -->
+            </RouterLink>
           </li>
           <li>
             <svgIcon name="signOut" width="32px" height="32px"></svgIcon>
