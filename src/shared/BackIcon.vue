@@ -11,18 +11,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
-const route = useRoute();
 const router = useRouter();
 
 const exit = () => {
-  const { return_to } = route.query;
-  if (return_to) {
-    router.push(return_to as string);
-  } else {
-    router.back();
-  }
+  router.back();
 };
 </script>
 
