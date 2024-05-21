@@ -43,6 +43,8 @@
             v-for="(item, index) in incomeTags"
             :key="index"
             @click="tagSelect(item.id, item.kind)"
+            @touchstart="OnTouchStart($event, item)"
+            @touchend="OnTouchEnd"
           >
             <div class="sign" :class="selectedId === item.id ? 'selected' : ''">
               {{ item.sign }}
