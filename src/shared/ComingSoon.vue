@@ -21,15 +21,20 @@ import Center from './Center.vue';
 
 <style lang="scss" scoped>
   .ComingSoon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: calc(50%) 0;
     .icon {
-        width: 128px;
-        height: 128px;
-        &__wrapper {
-            padding: 120px 0;
-        }
+      width: 128px;
+      height: 128px;
+      &__wrapper {
+          padding: 120px 0;
+      }
     }
 
     .text {
+        padding: 20px;
         text-align: center;
         font-size: 32px;
     }
