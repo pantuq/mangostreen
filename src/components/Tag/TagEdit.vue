@@ -15,12 +15,6 @@
       <Button @click="DeleteTag()" level="danger" class="removeTags"
         >删除标签</Button
       >
-      <!-- <Button
-        @click="DeleteTag({ withRecords: true })"
-        level="danger"
-        class="removeItemsAndTags"
-        >删除记账和标签</Button
-      > -->
     </div>
   </div>
 </template>
@@ -75,10 +69,8 @@ const DeleteTag = (option?: { withRecords: boolean }) => {
     padding: 0 16px 16px 16px;
     display: flex;
     justify-content: space-between;
-    .removeTags,
-    .removeItemsAndTags {
-      width: calc(50% - 8px);
-      // background-color: var(--error-color);
+    .removeTags {
+      width: calc(100%);
     }
   }
 }
