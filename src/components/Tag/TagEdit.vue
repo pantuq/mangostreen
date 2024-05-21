@@ -15,12 +15,12 @@
       <Button @click="DeleteTag()" level="danger" class="removeTags"
         >删除标签</Button
       >
-      <Button
+      <!-- <Button
         @click="DeleteTag({ withRecords: true })"
         level="danger"
         class="removeItemsAndTags"
         >删除记账和标签</Button
-      >
+      > -->
     </div>
   </div>
 </template>
