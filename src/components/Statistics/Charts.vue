@@ -1,24 +1,19 @@
 <template>
   <div class="Charts">
-    <div class="select" @click="openSelect">
-      <input type="text" placeholder="类型" readonly />
-      <div class="list" v-show="showList">
-        <ul>
-          <li
-            class="option"
-            :class="kind === 'expenses' ? 'selected' : ''"
-            @click="kind = 'expenses'"
-          >
-            支出
-          </li>
-          <li
-            class="option"
-            :class="kind === 'income' ? 'selected' : ''"
-            @click="kind = 'income'"
-          >
-            收入
-          </li>
-        </ul>
+    <div class="radio">
+      <div
+        class="option"
+        :class="kind === 'expenses' ? 'selected' : ''"
+        @click="selectKind('expenses')"
+      >
+        <span>支出</span>
+      </div>
+      <div
+        class="option"
+        :class="kind === 'income' ? 'selected' : ''"
+        @click="selectKind('income')"
+      >
+        <span>收入</span>
       </div>
     </div>
 
@@ -48,12 +43,12 @@ const props = defineProps({
 });
 
 const DAY = 24 * 60 * 60 * 1000;
-const showList = ref(false);
-const openSelect = () => {
-  showList.value = !showList.value;
-};
 
-const kind = ref("expenses");
+
+const kind = ref('expenses')
+const selectKind = (selKind: string) => {
+  kind.value = selKind
+}
 
 // 折线图
 const line = ref<Line>([])
@@ -144,33 +139,28 @@ const betterBar = computed<{tag: Tag, amount: number, percent: string}[]>(() => 
 
 <style lang="scss" scoped>
 .Charts {
-  > .select {
-    margin-top: 8px;
-    input {
-      padding: 8px 5px;
-      width: 100%;
-      outline: none;
-      border: 1px solid var(--select-option-bg);
-      border-radius: var(--input-radius);
-    }
-    ul {
-      width: 100%;
-      padding: 1px 1px;
-      border-width: 0 1px 1px 1px;
-      border-style: solid;
-      border-color: var(--main);
-      border-radius: 0 0 5px 5px;
-      li {
-        margin: 0;
-        padding: 5px;
-        // list-style: none;
-        border-radius: 5px;
-      }
+  color: blueviolet;
+  > .visually-hidden {
+    position: absolute;
+    opacity: 0;
+  }
 
-      > .selected {
-        background: var(--select-option-bg);
-        color: white;
-      }
+  > .radio {
+    padding: 16px 0 0 16px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    color: #975ad9;
+    > .option {
+      width: 25vw;
+      height: 48px;
+      line-height: 48px;
+      border-radius: 16px;
+    }
+
+    > .selected {
+      background-color: #975ad9;
+      color: white;
     }
   }
 }

@@ -27,6 +27,7 @@ declare module 'vue' {
     VanDatetimePicker: typeof import('vant/es')['DatetimePicker']
     VanOverlay: typeof import('vant/es')['Overlay']
     VanPopup: typeof import('vant/es')['Popup']
+    VanSwitch: typeof import('vant/es')['Switch']
     WelcomeFourAction: typeof import('./src/components/welcome/WelcomeAction/WelcomeFourAction.vue')['default']
     WelcomeFourCard: typeof import('./src/components/welcome/WelcomeCard/WelcomeFourCard.vue')['default']
     WelcomeOneAction: typeof import('./src/components/welcome/WelcomeAction/WelcomeOneAction.vue')['default']
