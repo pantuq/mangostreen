@@ -51,7 +51,7 @@ onMounted(() => {
             shadowColor: 'rgba(0, 0, 0, 0.5)'
           }
         },
-        radius: "90%",
+        radius: "75%",
       },
     ],
   };

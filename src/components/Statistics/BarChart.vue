@@ -1,7 +1,7 @@
 <template>
   <div class="BarChart">
     <div class="demo3">
-      <div class="topItem" v-for="(item, index) in $props.data" :key="index">
+      <div class="topItem" v-for="(item, index) in props.data" :key="index">
         <div class="sign">
           {{ item.tag.sign }}
         </div>
@@ -11,7 +11,7 @@
             <span>￥{{ handleAmount(item.amount) }}</span>
           </div>
           <div class="bar">
-            <div class="bar_inner"></div>
+            <div class="bar_inner" :style="{ width: item.percent }"></div>
           </div>
         </div>
       </div>
@@ -94,23 +94,24 @@ const props = defineProps({
         left: 0;
         height: 100%;
         width: 42px;
+        background: #8f4cd7;
       }
     }
-    &:nth-child(1) {
-      .bar_inner {
-        background: #eba953;
-      }
-    }
-    &:nth-child(2) {
-      .bar_inner {
-        background: #53a867;
-      }
-    }
-    &:nth-child(3) {
-      .bar_inner {
-        background: #91cc75;
-      }
-    }
+    // &:nth-child(1) {
+    //   .bar_inner {
+    //     background: #eba953;
+    //   }
+    // }
+    // &:nth-child(2) {
+    //   .bar_inner {
+    //     background: #53a867;
+    //   }
+    // }
+    // &:nth-child(3) {
+    //   .bar_inner {
+    //     background: #91cc75;
+    //   }
+    // }
   }
 }
 </style>
