@@ -32,11 +32,12 @@ const defaultOption = {
   grid: [{ left: 16, top: 0, right: 16, bottom: 20 }],
   xAxis: {
     type: 'time',
-    boundaryGap: ['3%', '0%'],
+    boundaryGap: ['2%', '0%'],
     axisLabel: {
       formatter: (value: string) => new Time(new Date(value)).Formt('MM-DD')
     },
     axisTick: {
+      interval: 'auto',
       alignWithLabel: true
     }
   },
@@ -80,7 +81,6 @@ watch(() => props.data, () => {
         }
       ]
     })
-    console.log(props.data);
 })
 </script>
 

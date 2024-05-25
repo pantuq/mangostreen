@@ -30,6 +30,7 @@
       </Tab>
       <Tab title="自定义时间">
         <Charts
+        :key="refreshKey"
           :startDate="customTime.start"
           :endDate="customTime.end"
         ></Charts>
@@ -52,7 +53,7 @@
               ></EndFormItem>
             </div>
             <div class="button-wrapper">
-              <button @click="hideOverlay" type="submit">确定</button>
+              <button @click="hideOverlay,refreshChart" type="submit">确定</button>
               <button @click="hideOverlay">取消</button>
             </div>
           </form>
@@ -79,6 +80,7 @@ const onUpdateSelected = (title: string) => {
   // 在切换tab时，判断是否是自定义时间，如果是，则显示overlay
   showOverlay();
 };
+const refreshKey = ref(0)
 
 const time = new Time(new Date());
 const customTime = reactive({
@@ -103,6 +105,7 @@ const timeList = [
 const items = ref<Item[]>([])
 
 const onSubmitCustomTime = async(e: Event) => {
+  e.preventDefault();
   await yierRequest2.get({
     url:"/api/v1/items",
     params:{
@@ -115,7 +118,7 @@ const onSubmitCustomTime = async(e: Event) => {
   }).catch((err) => {
     console.log(err)
   })
-  e.preventDefault();
+  
 };
 
 const protectContent = (e: Event) => {
@@ -140,6 +143,11 @@ const onStartDateChange = (startDate: any) => {
 };
 const onEndDateChange = (endDate: any) => {
   customTime.end = endDate.join("-");
+};
+
+const refreshChart = () => {
+  // 刷新图表
+  refreshKey.value += 1
 };
 </script>
 

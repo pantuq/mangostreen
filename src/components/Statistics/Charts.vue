@@ -66,12 +66,10 @@ const betterLine = computed<[string,number][]>(() => {
     const time = new Time(props.startDate).add(i, "day").Formt()
     if(line.value[dataIndex] && new Time(line.value[dataIndex].happened_at).Formt() === time){
       array.push([time,line.value[dataIndex].amount])
-      console.log(1111);
       // console.log(line.value[dataIndex]);
       dataIndex += 1
     }else{
       array.push([time, 0])
-      console.log(2222);
     }
   }
   return array as [string,number][]
