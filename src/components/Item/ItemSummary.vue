@@ -126,7 +126,7 @@ const fetchItem = async () => {
       },
     })
     .then((res) => {
-      console.log(res);
+      // console.log(res);
 
       items.value = res.resources;
       itemCount.value = res.pager.count;

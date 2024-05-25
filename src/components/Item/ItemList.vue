@@ -34,17 +34,19 @@
         />
       </Tab>
       <Tab title="自定义时间">
-        <ItemSummary
+        <!-- <div v-if="items.length"> -->
+          <CustomItemSummary
           :startDate="customTime.start"
           :endDate="customTime.end"
-        />
+         />
+        <!-- </div> -->
       </Tab>
     </Tabs>
-    <van-overlay :show="overlayVisible" class="overlay" @click="hideOverlay">
+    <van-overlay :show="overlayVisible" class="overlay" @click.stop="hideOverlay">
       <div class="overlay_inner">
         <header>请选择时间</header>
         <main>
-          <form @submit="onSubmitCustomTime">
+          <form v-on:submit="onSubmitCustomTime">
             <div @click="protectContent">
               <StartFormItem
                 title="开始时间"
@@ -56,7 +58,7 @@
               ></EndFormItem>
             </div>
             <div class="button-wrapper">
-              <button @click="hideOverlay" type="submit">确定</button>
+              <button @click="hideOverlay">确定</button>
               <button @click="hideOverlay">取消</button>
             </div>
           </form>
@@ -81,6 +83,7 @@ import EndFormItem from "./EndFormItem.vue";
 import { yierRequest2 } from "../../service";
 import router from "../../router";
 import FloatButton from "../../shared/FloatButton.vue";
+import CustomItemSummary from "./CustomItemSummary.vue";
 
 const tabKind = ref("本月");
 const overlayVisible = ref(false);
@@ -92,21 +95,7 @@ const onUpdateSelected = (title: string) => {
 
 const items = ref<Item[]>([])
 
-const onSubmitCustomTime = async(e: Event) => {
-  await yierRequest2.get({
-    url:"/api/v1/items",
-    params:{
-      page: 0,
-      happende_after: customTime.start,
-      happende_before: customTime.end
-    }
-  }).then(res=>{
-    items.value = res.resources
-  }).catch((err) => {
-    console.log(err)
-  })
-  e.preventDefault();
-};
+
 
 const protectContent = (e: Event) => {
   // 冒泡阻止
@@ -149,7 +138,6 @@ const onStartDateChange = (startDate: any) => {
   customTime.start = startDate.join("-");
 };
 const onEndDateChange = (endDate: any) => {
-  console.log("endDate", endDate);
   customTime.end = endDate.join("-");
 };
 
@@ -159,6 +147,23 @@ const onClickMenu = () => {
 };
 const hideMenu = () => {
   menuVisible.value = false;
+};
+
+const onSubmitCustomTime = async(e: Event) => {
+  e.preventDefault();  
+  await yierRequest2.get({
+    url:"/api/v1/items",
+    params:{
+      page: 0,
+      happende_after: customTime.start,
+      happende_before: customTime.end
+    }
+  }).then((res)=>{
+    items.value = res.resources
+    console.log('res',items.value);  
+  }).catch((err) => {
+    console.log(err)
+  })
 };
 
 const startAccounting = () => {
