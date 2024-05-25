@@ -172,6 +172,7 @@ const appendAmount = (value: string | number) => {
 
 <style lang="scss" scoped>
 .inputPad_Wrapper {
+  z-index: 10;
   position: fixed;
   bottom: 0;
   left: 0;
