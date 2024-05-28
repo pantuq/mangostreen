@@ -66,6 +66,7 @@ const signOut = () => {
   showConfirmDialog({
     title: "警告",
     message: "确定要退出登录吗？",
+    confirmButtonColor: "var(--main)"
   })
     .then(() => {
       router.push(`/sign_in?return_to=${route.fullPath}`);
