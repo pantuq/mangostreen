@@ -30,7 +30,6 @@
       </Tab>
       <Tab title="自定义时间">
         <CustomChart
-        :key="refreshKey"
           :startDate="customTime.start"
           :endDate="customTime.end"
         ></CustomChart>
@@ -53,7 +52,7 @@
               ></EndFormItem>
             </div>
             <div class="button-wrapper">
-              <button @click="hideOverlay,refreshChart" type="submit">确定</button>
+              <button @click="refreshChart,hideOverlay" type="submit">确定</button>
               <button @click="hideOverlay">取消</button>
             </div>
           </form>
@@ -73,6 +72,7 @@ import Charts from "../components/Statistics/Charts.vue";
 import BackIcon from "../shared/BackIcon.vue";
 import { yierRequest2 } from "../service";
 import CustomChart from "../components/Statistics/CustomChart.vue";
+import { showConfirmDialog } from "vant";
 
 const tabKind = ref("本月");
 const overlayVisible = ref(false);
@@ -81,11 +81,10 @@ const onUpdateSelected = (title: string) => {
   // 在切换tab时，判断是否是自定义时间，如果是，则显示overlay
   showOverlay();
 };
-const refreshKey = ref(0)
 
 const time = new Time(new Date());
 const customTime = reactive({
-  start: new Time().Formt(),
+  start: new Time('2024-4-30').Formt(),
   end: new Time().Formt(),
 });
 const timeList = [
@@ -137,6 +136,8 @@ const showOverlay = () => {
 const hideOverlay = () => {
   overlayVisible.value = false;
   // 日期选择结束，隐藏overlay
+  console.log("hide");
+  
 };
 
 const onStartDateChange = (startDate: any) => {
@@ -148,7 +149,18 @@ const onEndDateChange = (endDate: any) => {
 
 const refreshChart = () => {
   // 刷新图表
-  refreshKey.value += 1
+  console.log(11111);
+  
+  // showConfirmDialog({
+  //   title: "选择收支类型",
+  //   message: "请选择收支类型",
+  //   confirmButtonText: '收入',
+  //   cancelButtonText: '支出',
+  // }).then(() => {
+  //   // 收入
+  // }).catch(() => {
+  //   // 支出
+  // });
 };
 </script>
 
