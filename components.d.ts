@@ -9,6 +9,8 @@ declare module 'vue' {
   export interface GlobalComponents {
     BarChart: typeof import('./src/components/Statistics/BarChart.vue')['default']
     Charts: typeof import('./src/components/Statistics/Charts.vue')['default']
+    copy: typeof import('./src/components/Statistics/Charts copy.vue')['default']
+    CustomChart: typeof import('./src/components/Statistics/CustomChart.vue')['default']
     CustomItemSummary: typeof import('./src/components/Item/CustomItemSummary.vue')['default']
     EndFormItem: typeof import('./src/components/Item/EndFormItem.vue')['default']
     InputPad: typeof import('./src/components/Item/InputPad.vue')['default']

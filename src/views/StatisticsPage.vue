@@ -29,11 +29,11 @@
         ></Charts>
       </Tab>
       <Tab title="自定义时间">
-        <Charts
+        <CustomChart
         :key="refreshKey"
           :startDate="customTime.start"
           :endDate="customTime.end"
-        ></Charts>
+        ></CustomChart>
       </Tab>
     </Tabs>
 
@@ -72,6 +72,7 @@ import { Time } from "../shared/Time";
 import Charts from "../components/Statistics/Charts.vue";
 import BackIcon from "../shared/BackIcon.vue";
 import { yierRequest2 } from "../service";
+import CustomChart from "../components/Statistics/CustomChart.vue";
 
 const tabKind = ref("本月");
 const overlayVisible = ref(false);
