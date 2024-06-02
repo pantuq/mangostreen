@@ -52,7 +52,9 @@
               ></EndFormItem>
             </div>
             <div class="button-wrapper">
-              <button @click="refreshChart,hideOverlay" type="submit">确定</button>
+              <button @click="hideOverlay" type="submit">
+                确定
+              </button>
               <button @click="hideOverlay">取消</button>
             </div>
           </form>
@@ -72,7 +74,6 @@ import Charts from "../components/Statistics/Charts.vue";
 import BackIcon from "../shared/BackIcon.vue";
 import { yierRequest2 } from "../service";
 import CustomChart from "../components/Statistics/CustomChart.vue";
-import { showConfirmDialog } from "vant";
 
 const tabKind = ref("本月");
 const overlayVisible = ref(false);
@@ -82,9 +83,13 @@ const onUpdateSelected = (title: string) => {
   showOverlay();
 };
 
+// 为自定义数据的开始时间设置默认时间
+// 以保证在这段时间里面都有记账记录的
+const predate = new Date();
+
 const time = new Time(new Date());
 const customTime = reactive({
-  start: new Time('2024-4-30').Formt(),
+  start: new Time(`${predate.getFullYear()}-01-01}`).Formt(),
   end: new Time().Formt(),
 });
 const timeList = [
@@ -102,23 +107,25 @@ const timeList = [
   },
 ];
 
-const items = ref<Item[]>([])
+const items = ref<Item[]>([]);
 
-const onSubmitCustomTime = async(e: Event) => {
+const onSubmitCustomTime = async (e: Event) => {
   e.preventDefault();
-  await yierRequest2.get({
-    url:"/api/v1/items",
-    params:{
-      page: 0,
-      happende_after: customTime.start,
-      happende_before: customTime.end
-    }
-  }).then(res=>{
-    items.value = res.resources
-  }).catch((err) => {
-    console.log(err)
-  })
-  
+  await yierRequest2
+    .get({
+      url: "/api/v1/items",
+      params: {
+        page: 0,
+        happende_after: customTime.start,
+        happende_before: customTime.end,
+      },
+    })
+    .then((res) => {
+      items.value = res.resources;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const protectContent = (e: Event) => {
@@ -137,7 +144,6 @@ const hideOverlay = () => {
   overlayVisible.value = false;
   // 日期选择结束，隐藏overlay
   console.log("hide");
-  
 };
 
 const onStartDateChange = (startDate: any) => {
@@ -147,21 +153,6 @@ const onEndDateChange = (endDate: any) => {
   customTime.end = endDate.join("-");
 };
 
-const refreshChart = () => {
-  // 刷新图表
-  console.log(11111);
-  
-  // showConfirmDialog({
-  //   title: "选择收支类型",
-  //   message: "请选择收支类型",
-  //   confirmButtonText: '收入',
-  //   cancelButtonText: '支出',
-  // }).then(() => {
-  //   // 收入
-  // }).catch(() => {
-  //   // 支出
-  // });
-};
 </script>
 
 <style lang="scss" scoped>
